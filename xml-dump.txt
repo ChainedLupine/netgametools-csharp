@@ -1,0 +1,632 @@
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_32\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\assembly\GAC_MSIL\Microsoft.VisualStudio.HostingProcess.Utilities\12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.HostingProcess.Utilities.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\assembly\GAC_MSIL\Microsoft.VisualStudio.HostingProcess.Utilities.Sync\12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.HostingProcess.Utilities.Sync.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\assembly\GAC_MSIL\Microsoft.VisualStudio.Debugger.Runtime\12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.Debugger.Runtime.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\gamedev\networking\netgametools-csharp\netgametools-csharp\bin\Debug\netgametools-csharp.vshost.exe'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Xml.Linq\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.Linq.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Data.DataSetExtensions\v4.0_4.0.0.0__b77a5c561934e089\System.Data.DataSetExtensions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Microsoft.CSharp\v4.0_4.0.0.0__b03f5f7f11d50a3a\Microsoft.CSharp.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_32\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Deployment\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Deployment.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+The thread 0x2e04 has exited with code 259 (0x103).
+The thread 0x1704 has exited with code 0 (0x0).
+The thread 0x3910 has exited with code 259 (0x103).
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\gamedev\networking\netgametools-csharp\netgametools-csharp\bin\Debug\netgametools-csharp.exe'. Symbols loaded.
+'netgametools-csharp.vshost.exe' (CLR v4.0.30319: netgametools-csharp.vshost.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+Detected URI=http://192.168.1.1:5000/Public_UPNP_gatedesc.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:pnpx="http://schemas.microsoft.com/windows/pnpx/2005/11" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <URLBase>http://192.168.1.1:5000/</URLBase>
+  <device>
+    <pnpx:X_hardwareId>VEN_01f2&amp;DEV_000e&amp;REV_01 VEN_01f2&amp;DEV_8000&amp;SUBSYS_01&amp;REV_01 VEN_01f2&amp;DEV_8000&amp;REV_01 VEN_0033&amp;DEV_0008&amp;REV_01</pnpx:X_hardwareId>
+    <pnpx:X_deviceCategory>NetworkInfrastructure.Router</pnpx:X_deviceCategory>
+    <df:X_deviceCategory>Network.Router.Wireless</df:X_deviceCategory>
+    <pnpx:X_compatibleId>urn:schemas-upnp-org:device:InternetGatewayDevice:1</pnpx:X_compatibleId>
+    <deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType>
+    <friendlyName>R6300 (Gateway)</friendlyName>
+    <manufacturer>NETGEAR, Inc.</manufacturer>
+    <manufacturerURL>http://www.NETGEAR.com</manufacturerURL>
+    <modelDescription>NETGEAR R6300 N1800 Wireless Router</modelDescription>
+    <modelNumber>R6300</modelNumber>
+    <modelName>R6300</modelName>
+    <modelURL>http://www.netgear.com/Products/RoutersandGateways/RangeMaxNEXTWirelessRoutersandGateways/R6300.aspx</modelURL>
+    <UDN>uuid:b63adda6-d794-8365-37be-bd2bbe68c2bd</UDN>
+    <iconList>
+      <icon>
+        <mimetype>image/x-icon</mimetype>
+        <width>64</width>
+        <height>64</height>
+        <depth>32</depth>
+        <url>http://192.168.1.1/upnp.ico</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:Layer3Forwarding:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:L3Forwarding1</serviceId>
+        <SCPDURL>/Public_UPNP_Layer3F.xml</SCPDURL>
+        <controlURL>/Public_UPNP_C1</controlURL>
+        <eventSubURL>/Public_UPNP_Event_1</eventSubURL>
+      </service>
+    </serviceList>
+    <deviceList>
+      <device>
+        <deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType>
+        <friendlyName>WAN Device</friendlyName>
+        <manufacturer>NETGEAR, Inc.</manufacturer>
+        <manufacturerURL>http://www.NETGEAR.com</manufacturerURL>
+        <modelDescription>NETGEAR R6300 N1800 Wireless Router</modelDescription>
+        <modelNumber>R6300</modelNumber>
+        <modelName>R6300</modelName>
+        <modelURL>http://www.netgear.com/Products/RoutersandGateways/RangeMaxNEXTWirelessRoutersandGateways/R6300.aspx</modelURL>
+        <UDN>uuid:6354d467-fe54-a9e5-398a-3fac899281ea</UDN>
+        <iconList>
+          <icon>
+            <mimetype>image/x-icon</mimetype>
+            <width>64</width>
+            <height>64</height>
+            <depth>32</depth>
+            <url>http://192.168.1.1/upnp.ico</url>
+          </icon>
+        </iconList>
+        <serviceList>
+          <service>
+            <serviceType>urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1</serviceType>
+            <serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId>
+            <SCPDURL>/Public_UPNP_WAND.xml</SCPDURL>
+            <controlURL>/Public_UPNP_C2</controlURL>
+            <eventSubURL>/Public_UPNP_Event_2</eventSubURL>
+          </service>
+        </serviceList>
+        <deviceList>
+          <device>
+            <deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType>
+            <friendlyName>WAN Connection Device</friendlyName>
+            <manufacturer>NETGEAR, Inc.</manufacturer>
+            <manufacturerURL>http://www.NETGEAR.com</manufacturerURL>
+            <modelDescription>NETGEAR R6300 N1800 Wireless Router</modelDescription>
+            <modelNumber>R6300</modelNumber>
+            <modelName>R6300</modelName>
+            <modelURL>http://www.netgear.com/Products/RoutersandGateways/RangeMaxNEXTWirelessRoutersandGateways/R6300.aspx</modelURL>
+            <UDN>uuid:ec2b640d-fd06-9064-3c58-cdbaa44987a6</UDN>
+            <iconList>
+              <icon>
+                <mimetype>image/x-icon</mimetype>
+                <width>64</width>
+                <height>64</height>
+                <depth>32</depth>
+                <url>http://192.168.1.1/upnp.ico</url>
+              </icon>
+            </iconList>
+            <serviceList>
+              <service>
+                <serviceType>urn:schemas-upnp-org:service:WANEthernetLinkConfig:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:WANEthLinkC1</serviceId>
+                <SCPDURL>/Public_UPNP_WANEtherLinkCfg.xml</SCPDURL>
+                <controlURL>/Public_UPNP_C4</controlURL>
+                <eventSubURL>/Public_UPNP_Event_4</eventSubURL>
+              </service>
+              <service>
+                <serviceType>urn:schemas-upnp-org:service:WANIPConnection:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:WANIPConn1</serviceId>
+                <SCPDURL>/Public_UPNP_WANIPConn.xml</SCPDURL>
+                <controlURL>/Public_UPNP_C3</controlURL>
+                <eventSubURL>/Public_UPNP_Event_3</eventSubURL>
+              </service>
+              <service>
+                <serviceType>urn:schemas-upnp-org:service:WANPPPConnection:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:WANPPPConn1</serviceId>
+                <SCPDURL>/Public_UPNP_WANPPPConn.xml</SCPDURL>
+                <controlURL>/Public_UPNP_C5</controlURL>
+                <eventSubURL>/Public_UPNP_Event_5</eventSubURL>
+              </service>
+            </serviceList>
+          </device>
+        </deviceList>
+      </device>
+    </deviceList>
+    <presentationURL>http://www.routerlogin.net</presentationURL>
+  </device>
+</root>
+Detected URI=http://192.168.1.1:1990/WFADevice.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-wifialliance-org:device:WFADevice:1</deviceType>
+    <friendlyName>WFADevice</friendlyName>
+    <manufacturer>Broadcom Corporation</manufacturer>
+    <manufacturerURL>http://www.broadcom.com</manufacturerURL>
+    <modelDescription>Wireless Device</modelDescription>
+    <modelName>WPS</modelName>
+    <modelNumber>X1</modelNumber>
+    <serialNumber>0000001</serialNumber>
+    <UDN>uuid:e26eca28-a758-16c6-33d8-b8f31defcd32</UDN>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-wifialliance-org:service:WFAWLANConfig:1</serviceType>
+        <serviceId>urn:wifialliance-org:serviceId:WFAWLANConfig1</serviceId>
+        <SCPDURL>/x_wfawlanconfig.xml</SCPDURL>
+        <controlURL>/control?WFAWLANConfig</controlURL>
+        <eventSubURL>/event?WFAWLANConfig</eventSubURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.1:8200/rootDesc.xml
+A first chance exception of type 'System.Net.WebException' occurred in System.dll
+Unable to retrive profile!
+Detected URI=http://192.168.1.17:52235/dmr/SamsungMRDesc.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:pnpx="http://schemas.microsoft.com/windows/pnpx/2005/11" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType>
+    <pnpx:X_compatibleId>MS_DigitalMediaDeviceClass_DMR_V001</pnpx:X_compatibleId>
+    <df:X_deviceCategory>Display.TV.LCD Multimedia.DMR</df:X_deviceCategory>
+    <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMR-1.50</dlna:X_DLNADOC>
+    <friendlyName>TV-40C550</friendlyName>
+    <manufacturer>Samsung Electronics</manufacturer>
+    <manufacturerURL>http://www.samsung.com</manufacturerURL>
+    <modelDescription>Samsung DTV DMR</modelDescription>
+    <modelName>Samsung DTV DMR</modelName>
+    <modelNumber>1.0</modelNumber>
+    <modelURL>http://www.samsung.com</modelURL>
+    <serialNumber>20081224DMR</serialNumber>
+    <UDN>uuid:a36ad095-516d-a15a-0951-83218a7316e7</UDN>
+    <iconList>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/dmr/icon_SML.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/dmr/icon_LRG.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/dmr/icon_SML.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/dmr/icon_LRG.png</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:RenderingControl:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:RenderingControl</serviceId>
+        <controlURL>/upnp/control/RenderingControl1</controlURL>
+        <eventSubURL>/upnp/event/RenderingControl1</eventSubURL>
+        <SCPDURL>RenderingControl1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+        <controlURL>/upnp/control/ConnectionManager1</controlURL>
+        <eventSubURL>/upnp/event/ConnectionManager1</eventSubURL>
+        <SCPDURL>ConnectionManager1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:AVTransport:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:AVTransport</serviceId>
+        <controlURL>/upnp/control/AVTransport1</controlURL>
+        <eventSubURL>/upnp/event/AVTransport1</eventSubURL>
+        <SCPDURL>AVTransport1.xml</SCPDURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.17:52235/pmr/PersonalMessageReceiver.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:samsung.com:device:PersonalMessageReceiver:1</deviceType>
+    <friendlyName>TV-40C550</friendlyName>
+    <manufacturer>Samsung Electronics</manufacturer>
+    <manufacturerURL>http://www.samsung.com</manufacturerURL>
+    <modelDescription>Samsung DTV PMR</modelDescription>
+    <modelName>Samsung DTV PMR</modelName>
+    <modelNumber>1.0</modelNumber>
+    <modelURL>http://www.samsung.com</modelURL>
+    <serialNumber>20081224PMR</serialNumber>
+    <UDN>uuid:c7dc558f-8ba0-6a4f-dae9-d7bd75701bb7</UDN>
+    <iconList>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/pmr/icon_SML.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/pmr/icon_LRG.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/pmr/icon_SML.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/pmr/icon_LRG.png</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:samsung.com:service:MessageBoxService:1</serviceType>
+        <serviceId>urn:samsung.com:serviceId:MessageBoxService</serviceId>
+        <controlURL>/PMR/control/MessageBoxService</controlURL>
+        <eventSubURL>/PMR/event/MessageBoxService</eventSubURL>
+        <SCPDURL>MessageBoxService.xml</SCPDURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.17:52235/ruis/RemoteUIServerDescLevel1.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device xmlns:rui="urn:schemas-ce-org:cea2014-server-ext-1-0">
+    <deviceType>urn:schemas-ce-org:device:RemoteUIServerDevice:1</deviceType>
+    <friendlyName>TV-40C550</friendlyName>
+    <manufacturer>Samsung Electronics</manufacturer>
+    <manufacturerURL>http://www.samsung.com</manufacturerURL>
+    <modelDescription>Remote UI Server - DTV</modelDescription>
+    <modelName>SamsungCERemoteServer</modelName>
+    <modelNumber>1.0</modelNumber>
+    <modelURL>http://www.samsung.com</modelURL>
+    <serialNumber>20090601</serialNumber>
+    <UDN>uuid:06e19b98-cb21-bb39-3c63-fa0ebab3e45d</UDN>
+    <UPC>129156725912</UPC>
+    <iconList>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/ruis/icon_SML.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/ruis/icon_LRG.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/ruis/icon_SML.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/ruis/icon_LRG.png</url>
+      </icon>
+    </iconList>
+    <rui:uiServerInfo xmlns:rui="urn:schemas-ce-org:cea-2014-server-ext-1-0">
+      <rui:uiListURL>http://192.168.1.17:5601/XMLUIList_1001/RemoteUIServerUIList.xml</rui:uiListURL>
+    </rui:uiServerInfo>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-ce-org:service:RemoteUIServer:1</serviceType>
+        <serviceId>urn:ce-org:serviceId:RemoteUIServer1</serviceId>
+        <SCPDURL>RUISSCPD.xml</SCPDURL>
+        <controlURL />
+        <eventSubURL />
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.1:8200/rootDesc.xml
+A first chance exception of type 'System.Net.WebException' occurred in System.dll
+Unable to retrive profile!
+Detected URI=http://192.168.1.3:60574/RootDevice.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMS-1.50</dlna:X_DLNADOC>
+    <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">M-DMS-1.50</dlna:X_DLNADOC>
+    <dlna:X_DLNACAP xmlns:dlna="urn:schemas-dlna-org:device-1-0">av-upload,image-upload,audio-upload</dlna:X_DLNACAP>
+    <deviceType>urn:schemas-upnp-org:device:MediaServer:1</deviceType>
+    <friendlyName>Vuze on CHRISTOPHER-PC</friendlyName>
+    <manufacturer>Azureus Software, Inc.</manufacturer>
+    <manufacturerURL>http://www.vuze.com</manufacturerURL>
+    <modelDescription>Provides content through UPnP ContentDirectory service</modelDescription>
+    <modelName>Vuze Media Server</modelName>
+    <modelNumber>0.1</modelNumber>
+    <modelURL>http://www.vuze.com/</modelURL>
+    <UDN>uuid:33882756-7248-4750-0425-74ef7120bebc</UDN>
+    <iconList>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/Vuze120x120.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/Vuze120x120.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/Vuze48x48.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/Vuze48x48.jpg</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>24</depth>
+        <url>/Vuze32x32.png</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>24</depth>
+        <url>/Vuze32x32.jpg</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:urn:schemas-upnp-org:service:ConnectionManager</serviceId>
+        <SCPDURL>ConnectionManager.xml</SCPDURL>
+        <controlURL>ConnectionManager/Control</controlURL>
+        <eventSubURL>ConnectionManager/Event</eventSubURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ContentDirectory:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:urn:schemas-upnp-org:service:ContentDirectory</serviceId>
+        <SCPDURL>ContentDirectory.xml</SCPDURL>
+        <controlURL>ContentDirectory/Control</controlURL>
+        <eventSubURL>ContentDirectory/Event</eventSubURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.16:8008/ssdp/device-desc.xml
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <URLBase>http://192.168.1.16:8008</URLBase>
+  <device>
+    <deviceType>urn:dial-multiscreen-org:device:dial:1</deviceType>
+    <friendlyName>Chromecast2664</friendlyName>
+    <manufacturer>Google Inc.</manufacturer>
+    <modelName>Eureka Dongle</modelName>
+    <UDN>uuid:15829a19-e580-dfa7-f027-665cbf0cd484</UDN>
+    <iconList>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>98</width>
+        <height>55</height>
+        <depth>32</depth>
+        <url>/setup/icon.png</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:dial-multiscreen-org:service:dial:1</serviceType>
+        <serviceId>urn:dial-multiscreen-org:serviceId:dial</serviceId>
+        <controlURL>/ssdp/notfound</controlURL>
+        <eventSubURL>/ssdp/notfound</eventSubURL>
+        <SCPDURL>/ssdp/notfound</SCPDURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.3:2869/upnphost/udhisapi.dll?content=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <UDN>uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e</UDN>
+    <friendlyName>CHRISTOPHER-PC: Christopher:</friendlyName>
+    <deviceType>urn:schemas-upnp-org:device:MediaServer:1</deviceType>
+    <manufacturer>Microsoft Corporation</manufacturer>
+    <manufacturerURL>http://www.microsoft.com</manufacturerURL>
+    <modelName>Windows Media Player Sharing</modelName>
+    <modelNumber>12.0</modelNumber>
+    <modelURL>http://go.microsoft.com/fwlink/?LinkId=105926</modelURL>
+    <serialNumber>{3C37532E-F2B2-45D1-A38C-E0A39A02BD6F}</serialNumber>
+    <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMS-1.50</dlna:X_DLNADOC>
+    <microsoft:magicPacketWakeSupported xmlns:microsoft="urn:schemas-microsoft-com:WMPNSS-1-0">1</microsoft:magicPacketWakeSupported>
+    <iconList>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:2ba5bdbc-2926-4245-a040-b9699520681c</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:6da53df3-c489-4023-9d24-9b6caf84fcb2</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:ebacced0-1662-4917-8344-ec72722fabf8</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:21583d0c-ac59-4e42-a09e-8de7eacb06fa</url>
+      </icon>
+      <icon>
+        <mimetype>image/bmp</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>16</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:822b243c-09e7-42e8-8b6e-50d0a660e4ee</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:7a72bee6-1801-4f95-889e-54c956dfd0b7</url>
+      </icon>
+      <icon>
+        <mimetype>image/bmp</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>16</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:2d2b5a2b-8a51-41a3-af27-9c2ce30e0e0d</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:b2a0947e-835a-4177-a077-75cfdd6e2728</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>120</width>
+        <height>120</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:301e7037-8521-4ee4-a2ec-52cf6fa9956e</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:f54472a1-edd1-4a11-80ad-1c33a41d4540</url>
+      </icon>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:5fea6d0c-9707-41d2-8673-e5e57e0c8641</url>
+      </icon>
+      <icon>
+        <mimetype>image/bmp</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>16</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:ef1d9877-8aef-48cd-b976-5e2fadbbde4b</url>
+      </icon>
+      <icon>
+        <mimetype>image/jpeg</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>24</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:2eb325c2-f720-462c-82a3-2ed053a4fe02</url>
+      </icon>
+      <icon>
+        <mimetype>image/bmp</mimetype>
+        <width>32</width>
+        <height>32</height>
+        <depth>16</depth>
+        <url>/upnphost/udhisapi.dll?content=uuid:8bf1a140-11cb-42f5-b83f-89588fdfb1aa</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+        <controlURL>/upnphost/udhisapi.dll?control=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:upnp-org:serviceId:ConnectionManager</controlURL>
+        <eventSubURL>/upnphost/udhisapi.dll?event=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:upnp-org:serviceId:ConnectionManager</eventSubURL>
+        <SCPDURL>/upnphost/udhisapi.dll?content=uuid:4f10f52a-9d21-47bb-9d46-d78f26264bb2</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ContentDirectory:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ContentDirectory</serviceId>
+        <controlURL>/upnphost/udhisapi.dll?control=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:upnp-org:serviceId:ContentDirectory</controlURL>
+        <eventSubURL>/upnphost/udhisapi.dll?event=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:upnp-org:serviceId:ContentDirectory</eventSubURL>
+        <SCPDURL>/upnphost/udhisapi.dll?content=uuid:3e54c7d0-0a25-495f-b770-1bb85c9d050d</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:microsoft.com:service:X_MS_MediaReceiverRegistrar:1</serviceType>
+        <serviceId>urn:microsoft.com:serviceId:X_MS_MediaReceiverRegistrar</serviceId>
+        <controlURL>/upnphost/udhisapi.dll?control=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:microsoft.com:serviceId:X_MS_MediaReceiverRegistrar</controlURL>
+        <eventSubURL>/upnphost/udhisapi.dll?event=uuid:78ec5611-bdf2-4c3e-891e-c839fb252f0e+urn:microsoft.com:serviceId:X_MS_MediaReceiverRegistrar</eventSubURL>
+        <SCPDURL>/upnphost/udhisapi.dll?content=uuid:38e54c9c-575e-4d97-8525-5614f27ab900</SCPDURL>
+      </service>
+    </serviceList>
+  </device>
+</root>
+Detected URI=http://192.168.1.1:8200/rootDesc.xml
+A first chance exception of type 'System.Net.WebException' occurred in System.dll
+Unable to retrive profile!
+Detected URI=http://192.168.1.1:8200/rootDesc.xml
+A first chance exception of type 'System.Net.WebException' occurred in System.dll
+Unable to retrive profile!
+The thread 0x38b0 has exited with code 259 (0x103).
+The thread 0x1450 has exited with code 259 (0x103).
+The program '[13300] netgametools-csharp.vshost.exe' has exited with code 0 (0x0).

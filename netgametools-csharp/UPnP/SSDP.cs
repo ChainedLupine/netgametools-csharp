@@ -7,9 +7,35 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Diagnostics;
 
 namespace chainedlupine.UPnP
 {
+    class DeviceList
+    {
+        List<Device> list = new List<Device>();
+
+        public void Add (Device device)
+        {
+            list.Add(device);
+        }
+
+        public bool isPresent (Device device)
+        {
+            foreach (Device d in list)
+            {
+                if (d.uuid == device.uuid)
+                    return true;
+            }
+            return false;
+        }
+
+        public List<Device> ToList()
+        {
+            return list ;
+        }
+    }
+
     class httpresponse
     {
         public int status = -1;
@@ -62,6 +88,17 @@ namespace chainedlupine.UPnP
 
         const ushort SSDP_PORT = 1900;
 
+        public string getUUID(string raw)
+        {
+            MatchCollection matches = Regex.Matches (raw, @"^uuid:([\w\d-]+)::") ;
+
+            if (matches.Count == 1 && matches[0].Groups.Count == 2)
+            {
+                return matches[0].Groups[1].Value;
+            } else
+                return  "" ;
+        }
+
         public List<Device> Discover(string deviceType, ushort port = SSDP_PORT)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -81,7 +118,7 @@ namespace chainedlupine.UPnP
 
             DateTime start = DateTime.Now;
 
-            List<Device> devices = new List<Device>();
+            DeviceList devices = new DeviceList();
 
             do
             {
@@ -99,8 +136,21 @@ namespace chainedlupine.UPnP
                     {
                         // We've got a valid status
                         Device device = new Device();
-                        device.deviceUri = new Uri(response.values["location"]);
-                        devices.Add(device);
+                        device.deviceUri = new Uri (response.values["location"]) ;
+                        device.uuid = getUUID(response.values["usn"]) ;
+                        
+                        if (!devices.isPresent(device))
+                        {
+                            // Do more indepth decoding
+                            Debug.WriteLine(string.Format ("Detected URI={0}", device.deviceUri));
+                            device.discoveredKeys = new Dictionary<string, string>(response.values);
+                            if (device.retrieveProfile())
+                            {
+                                devices.Add(device);
+                            }
+                            else
+                                Debug.WriteLine("Unable to retrive profile!");
+                        }
                     }
                 }
 
@@ -108,7 +158,7 @@ namespace chainedlupine.UPnP
 
             } while (DateTime.Now.Subtract (start).TotalSeconds < 3) ;
 
-            return devices;
+            return devices.ToList();
         }
     }
 }
