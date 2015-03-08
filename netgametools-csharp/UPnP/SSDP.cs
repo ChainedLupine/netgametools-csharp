@@ -136,21 +136,25 @@ namespace chainedlupine.UPnP
                     {
                         // We've got a valid status
                         Device device = new Device();
-                        device.deviceUri = new Uri (response.values["location"]) ;
-                        device.uuid = getUUID(response.values["usn"]) ;
-                        
-                        if (!devices.isPresent(device))
+                        device.deviceUri = new Uri(response.values["location"]);
+                        // Do more indepth decoding
+                        Debug.WriteLine(string.Format("Detected URI={0}", device.deviceUri));
+                        device.discoveredKeys = new Dictionary<string, string>(response.values);
+                        try
                         {
-                            // Do more indepth decoding
-                            Debug.WriteLine(string.Format ("Detected URI={0}", device.deviceUri));
-                            device.discoveredKeys = new Dictionary<string, string>(response.values);
-                            if (device.retrieveProfile())
-                            {
-                                devices.Add(device);
-                            }
-                            else
-                                Debug.WriteLine("Unable to retrive profile!");
+                            device.retrieveDeviceProfile();
                         }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine(string.Format("Unable to retrive profile: {0}", e.Message));
+                        }
+
+                        if (device.uuid != null && !devices.isPresent(device))
+                        {
+                            devices.Add(device);
+                        }
+                        else
+                            Debug.WriteLine("Not adding device, already present or null UUID.");
                     }
                 }
 

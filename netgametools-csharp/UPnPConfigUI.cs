@@ -19,6 +19,8 @@ namespace netgametools_csharp
     {
         private BindingSource pcBindingSource = new BindingSource();
 
+        private List<Device> uPnPDevices;
+
         public UPnPConfigUI()
         {
             InitializeComponent();
@@ -48,10 +50,6 @@ namespace netgametools_csharp
             */
         }
 
-        private void btnDiscover_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void On_Load(object sender, EventArgs e)
         {
@@ -150,23 +148,66 @@ namespace netgametools_csharp
                 textCollectionTitle.Text = comboPortCollections.Text;
         }
 
+        private void BuildSelectedDeviceList()
+        {
+            grpDevice.Enabled = false;
+            listViewDevices.Items.Clear();
+
+            foreach (Device device in uPnPDevices)
+            {
+                if (checkBoxIGDOnly.Checked && device.deviceType != Device.DeviceTypeEnum.InternetGatewayDevice)
+                    continue;
+
+                ListViewItem item = new ListViewItem(device.descFriendlyName);
+                item.SubItems.Add(device.descModelName);
+                item.SubItems.Add(device.descManufacturer);
+                item.SubItems.Add("N/A");
+                item.SubItems.Add(device.uuid);
+
+                listViewDevices.Items.Add(item);
+            }
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
             ssdp ssdpDiscoverer = new ssdp();
 
             WriteStatus("Searching!", Color.Blue);
-
-
-            List<Device> devices = ssdpDiscoverer.Discover(ssdp.DEVICETYPE_ROOTDEVICE);
-
-            if (devices.Count > 0)
+            using (SearchBusyForm busyForm = new SearchBusyForm())
             {
-                WriteStatus(string.Format ("Found {0} devices on network!", devices.Count));
-            } else
-            {
-                WriteStatus("Unable to find any uPnP-enabled devices!", Color.Red);
+                Form darker;
+
+                darker = new Form();
+                darker.ControlBox = darker.MinimizeBox = false;
+                darker.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                darker.Text = "";
+                darker.BackColor = Color.Black;
+                darker.Opacity = 0.7f;
+                darker.Show();
+                darker.Size = ClientSize;
+                darker.Location = PointToScreen(Point.Empty);
+
+                busyForm.StartPosition = FormStartPosition.Manual;
+                busyForm.Location = new Point(this.Location.X + (this.Width - busyForm.Width) / 2, this.Location.Y + (this.Height - busyForm.Height) / 2);
+                busyForm.Show();
+                busyForm.Update();
+
+                uPnPDevices = ssdpDiscoverer.Discover(ssdp.DEVICETYPE_ROOTDEVICE);
+
+                if (uPnPDevices.Count > 0)
+                {
+                    WriteStatus(string.Format("Found {0} devices on network!", uPnPDevices.Count));
+                    BuildSelectedDeviceList();
+
+                }
+                else
+                {
+                    WriteStatus("Unable to find any uPnP-enabled devices!", Color.Red);
+                }
+
+                busyForm.Close();
+                darker.Close();
             }
-
         }
 
         private void WriteStatus (string text, Color? c = null)
@@ -177,6 +218,11 @@ namespace netgametools_csharp
             textStatus.Update();
             textStatus.Refresh();
             Application.DoEvents();
+        }
+
+        private void checkBoxIGDOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            BuildSelectedDeviceList();
         }
 
 

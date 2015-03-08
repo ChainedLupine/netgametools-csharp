@@ -28,19 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewDevices = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSearch = new System.Windows.Forms.Button();
             this.grpDeviceList = new System.Windows.Forms.GroupBox();
+            this.checkBoxIGDOnly = new System.Windows.Forms.CheckBox();
             this.comboAdapters = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textCurrentIP = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnQuery = new System.Windows.Forms.Button();
             this.grpDevice = new System.Windows.Forms.GroupBox();
+            this.groupIGDInfo = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnRemoveForward = new System.Windows.Forms.Button();
+            this.textDeviceExternalIP = new System.Windows.Forms.TextBox();
             this.btnAddForward = new System.Windows.Forms.Button();
             this.listViewDeviceMappings = new System.Windows.Forms.ListView();
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,8 +53,6 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textDeviceExternalIP = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.textDeviceModel = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textDeviceName = new System.Windows.Forms.TextBox();
@@ -67,34 +70,44 @@
             this.btnPortCollectionRemove = new System.Windows.Forms.Button();
             this.btnPortCollectionAdd = new System.Windows.Forms.Button();
             this.textStatus = new System.Windows.Forms.TextBox();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpDeviceList.SuspendLayout();
             this.grpDevice.SuspendLayout();
+            this.groupIGDInfo.SuspendLayout();
             this.grpPorts.SuspendLayout();
             this.grpPortDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCollection)).BeginInit();
             this.SuspendLayout();
             // 
-            // listView1
+            // listViewDevices
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.listViewDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
+            this.columnHeader9,
             this.columnHeader3,
-            this.columnHeader2});
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(6, 19);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(794, 95);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.columnHeader2,
+            this.columnHeader10});
+            this.listViewDevices.FullRowSelect = true;
+            this.listViewDevices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewDevices.Location = new System.Drawing.Point(6, 19);
+            this.listViewDevices.MultiSelect = false;
+            this.listViewDevices.Name = "listViewDevices";
+            this.listViewDevices.Size = new System.Drawing.Size(794, 101);
+            this.listViewDevices.TabIndex = 0;
+            this.listViewDevices.UseCompatibleStateImageBehavior = false;
+            this.listViewDevices.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
             this.columnHeader1.Width = 200;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Model Name";
+            this.columnHeader9.Width = 110;
             // 
             // columnHeader3
             // 
@@ -121,12 +134,13 @@
             // 
             this.grpDeviceList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpDeviceList.Controls.Add(this.checkBoxIGDOnly);
             this.grpDeviceList.Controls.Add(this.comboAdapters);
             this.grpDeviceList.Controls.Add(this.label3);
             this.grpDeviceList.Controls.Add(this.textCurrentIP);
             this.grpDeviceList.Controls.Add(this.label2);
             this.grpDeviceList.Controls.Add(this.btnQuery);
-            this.grpDeviceList.Controls.Add(this.listView1);
+            this.grpDeviceList.Controls.Add(this.listViewDevices);
             this.grpDeviceList.Controls.Add(this.btnSearch);
             this.grpDeviceList.Location = new System.Drawing.Point(12, 12);
             this.grpDeviceList.MinimumSize = new System.Drawing.Size(887, 156);
@@ -136,10 +150,23 @@
             this.grpDeviceList.TabStop = false;
             this.grpDeviceList.Text = "Devices";
             // 
+            // checkBoxIGDOnly
+            // 
+            this.checkBoxIGDOnly.AutoSize = true;
+            this.checkBoxIGDOnly.Checked = true;
+            this.checkBoxIGDOnly.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxIGDOnly.Location = new System.Drawing.Point(648, 128);
+            this.checkBoxIGDOnly.Name = "checkBoxIGDOnly";
+            this.checkBoxIGDOnly.Size = new System.Drawing.Size(173, 17);
+            this.checkBoxIGDOnly.TabIndex = 7;
+            this.checkBoxIGDOnly.Text = "Internet Gateway Devices Only";
+            this.checkBoxIGDOnly.UseVisualStyleBackColor = true;
+            this.checkBoxIGDOnly.CheckedChanged += new System.EventHandler(this.checkBoxIGDOnly_CheckedChanged);
+            // 
             // comboAdapters
             // 
             this.comboAdapters.FormattingEnabled = true;
-            this.comboAdapters.Location = new System.Drawing.Point(137, 119);
+            this.comboAdapters.Location = new System.Drawing.Point(136, 126);
             this.comboAdapters.Name = "comboAdapters";
             this.comboAdapters.Size = new System.Drawing.Size(298, 21);
             this.comboAdapters.TabIndex = 6;
@@ -148,7 +175,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 123);
+            this.label3.Location = new System.Drawing.Point(6, 130);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(124, 13);
             this.label3.TabIndex = 5;
@@ -156,7 +183,7 @@
             // 
             // textCurrentIP
             // 
-            this.textCurrentIP.Location = new System.Drawing.Point(513, 119);
+            this.textCurrentIP.Location = new System.Drawing.Point(512, 126);
             this.textCurrentIP.Name = "textCurrentIP";
             this.textCurrentIP.ReadOnly = true;
             this.textCurrentIP.Size = new System.Drawing.Size(130, 20);
@@ -165,7 +192,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(441, 123);
+            this.label2.Location = new System.Drawing.Point(440, 130);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 3;
@@ -186,11 +213,7 @@
             // 
             this.grpDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.grpDevice.Controls.Add(this.btnRemoveForward);
-            this.grpDevice.Controls.Add(this.btnAddForward);
-            this.grpDevice.Controls.Add(this.listViewDeviceMappings);
-            this.grpDevice.Controls.Add(this.textDeviceExternalIP);
-            this.grpDevice.Controls.Add(this.label6);
+            this.grpDevice.Controls.Add(this.groupIGDInfo);
             this.grpDevice.Controls.Add(this.textDeviceModel);
             this.grpDevice.Controls.Add(this.label5);
             this.grpDevice.Controls.Add(this.textDeviceName);
@@ -203,20 +226,53 @@
             this.grpDevice.TabStop = false;
             this.grpDevice.Text = "Device";
             // 
+            // groupIGDInfo
+            // 
+            this.groupIGDInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupIGDInfo.Controls.Add(this.label6);
+            this.groupIGDInfo.Controls.Add(this.btnRemoveForward);
+            this.groupIGDInfo.Controls.Add(this.textDeviceExternalIP);
+            this.groupIGDInfo.Controls.Add(this.btnAddForward);
+            this.groupIGDInfo.Controls.Add(this.listViewDeviceMappings);
+            this.groupIGDInfo.Location = new System.Drawing.Point(10, 69);
+            this.groupIGDInfo.Name = "groupIGDInfo";
+            this.groupIGDInfo.Size = new System.Drawing.Size(515, 284);
+            this.groupIGDInfo.TabIndex = 12;
+            this.groupIGDInfo.TabStop = false;
+            this.groupIGDInfo.Text = "Internet Gateway Info";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "External IPv4";
+            // 
             // btnRemoveForward
             // 
             this.btnRemoveForward.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRemoveForward.Location = new System.Drawing.Point(87, 336);
+            this.btnRemoveForward.Location = new System.Drawing.Point(82, 255);
             this.btnRemoveForward.Name = "btnRemoveForward";
             this.btnRemoveForward.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveForward.TabIndex = 11;
             this.btnRemoveForward.Text = "Remove";
             this.btnRemoveForward.UseVisualStyleBackColor = true;
             // 
+            // textDeviceExternalIP
+            // 
+            this.textDeviceExternalIP.Location = new System.Drawing.Point(82, 17);
+            this.textDeviceExternalIP.Name = "textDeviceExternalIP";
+            this.textDeviceExternalIP.ReadOnly = true;
+            this.textDeviceExternalIP.Size = new System.Drawing.Size(130, 20);
+            this.textDeviceExternalIP.TabIndex = 8;
+            // 
             // btnAddForward
             // 
             this.btnAddForward.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddForward.Location = new System.Drawing.Point(6, 336);
+            this.btnAddForward.Location = new System.Drawing.Point(6, 255);
             this.btnAddForward.Name = "btnAddForward";
             this.btnAddForward.Size = new System.Drawing.Size(75, 23);
             this.btnAddForward.TabIndex = 10;
@@ -235,10 +291,10 @@
             this.columnHeader6,
             this.columnHeader8});
             this.listViewDeviceMappings.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listViewDeviceMappings.Location = new System.Drawing.Point(10, 95);
+            this.listViewDeviceMappings.Location = new System.Drawing.Point(9, 43);
             this.listViewDeviceMappings.MultiSelect = false;
             this.listViewDeviceMappings.Name = "listViewDeviceMappings";
-            this.listViewDeviceMappings.Size = new System.Drawing.Size(515, 235);
+            this.listViewDeviceMappings.Size = new System.Drawing.Size(500, 206);
             this.listViewDeviceMappings.TabIndex = 7;
             this.listViewDeviceMappings.UseCompatibleStateImageBehavior = false;
             this.listViewDeviceMappings.View = System.Windows.Forms.View.Details;
@@ -266,24 +322,7 @@
             // columnHeader8
             // 
             this.columnHeader8.Text = "External Port";
-            this.columnHeader8.Width = 75;
-            // 
-            // textDeviceExternalIP
-            // 
-            this.textDeviceExternalIP.Location = new System.Drawing.Point(82, 69);
-            this.textDeviceExternalIP.Name = "textDeviceExternalIP";
-            this.textDeviceExternalIP.ReadOnly = true;
-            this.textDeviceExternalIP.Size = new System.Drawing.Size(130, 20);
-            this.textDeviceExternalIP.TabIndex = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 72);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "External IPv4";
+            this.columnHeader8.Width = 74;
             // 
             // textDeviceModel
             // 
@@ -469,6 +508,11 @@
             this.textStatus.Size = new System.Drawing.Size(887, 20);
             this.textStatus.TabIndex = 7;
             // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "UUID";
+            this.columnHeader10.Width = 220;
+            // 
             // UPnPConfigUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -486,6 +530,8 @@
             this.grpDeviceList.PerformLayout();
             this.grpDevice.ResumeLayout(false);
             this.grpDevice.PerformLayout();
+            this.groupIGDInfo.ResumeLayout(false);
+            this.groupIGDInfo.PerformLayout();
             this.grpPorts.ResumeLayout(false);
             this.grpPortDetails.ResumeLayout(false);
             this.grpPortDetails.PerformLayout();
@@ -497,7 +543,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewDevices;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button btnSearch;
@@ -536,6 +582,10 @@
         private System.Windows.Forms.Button btnRemoveForward;
         private System.Windows.Forms.Button btnAddForward;
         private System.Windows.Forms.TextBox textStatus;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.CheckBox checkBoxIGDOnly;
+        private System.Windows.Forms.GroupBox groupIGDInfo;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
     }
 }
 
