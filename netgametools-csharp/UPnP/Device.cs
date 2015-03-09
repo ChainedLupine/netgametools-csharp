@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Net;
 using System.Diagnostics;
 using System.IO;
@@ -29,6 +30,25 @@ namespace chainedlupine.UPnP
             }
 
             return sb.ToString() ;
+        }
+
+        public static XmlDocument ToXmlDocument(this XDocument xDocument)
+        {
+            var xmlDocument = new XmlDocument();
+            using (var xmlReader = xDocument.CreateReader())
+            {
+                xmlDocument.Load(xmlReader);
+            }
+            return xmlDocument;
+        }
+
+        public static XDocument ToXDocument(this XmlDocument xmlDocument)
+        {
+            using (var nodeReader = new XmlNodeReader(xmlDocument))
+            {
+                nodeReader.MoveToContent();
+                return XDocument.Load(nodeReader);
+            }
         }
     }
     class Device
@@ -129,12 +149,19 @@ namespace chainedlupine.UPnP
                     ServiceWANIPConnection service = new ServiceWANIPConnection(deviceUri, profileXML, nsMgr, xnServiceNode);
                     services.Add(service);
 
-                    XmlDocument woo = new XmlDocument();
+                    /*XmlDocument woo = new XmlDocument();
                     XmlElement action = woo.CreateElement("u", "GetExternalIPAddress", "urn:schemas-upnp-org:service:WANIPConnection:1");
-                    woo.AppendChild(action);
+                    woo.AppendChild(action);*/
 
-                    XmlDocument resp = service.ExecSOAPRequest(woo);
-                    Debug.WriteLine(resp.AsString());
+                    string serviceNamespaceURN = "urn:schemas-upnp-org:service:WANIPConnection:1" ;
+                    XNamespace uNs = serviceNamespaceURN;
+
+                    XElement woo = new XElement(uNs + "GetExternalIPAddress",
+                            new XAttribute(XNamespace.Xmlns + "u", serviceNamespaceURN)
+                        );
+
+                    XDocument resp = service.ExecSOAPRequest(woo);
+                    Debug.WriteLine(resp.ToXmlDocument().AsString());
                 }
 
                 /*XmlNode xnServiceUrl = xnServiceNode.SelectSingleNode("tns:SCPDURL/text()", nsMgr);

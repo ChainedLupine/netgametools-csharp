@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Diagnostics;
@@ -16,6 +17,8 @@ namespace chainedlupine.UPnP
         protected List<String> supportedActions = new List<String>();
 
         protected Uri serviceControlUri ;
+
+        protected const string SOAP_NAMESPACE_URI = "http://schemas.xmlsoap.org/soap/envelope/" ;
 
         public Service(Uri deviceUri, XmlDocument profileXML, XmlNamespaceManager nsMgr, XmlNode descNode)
         {
@@ -44,45 +47,39 @@ namespace chainedlupine.UPnP
         }
 
         // Returns the response
-        public XmlDocument ExecSOAPRequest (XmlDocument request)
+        public XDocument ExecSOAPRequest (XElement request)
         {
-            XmlDocument req = new XmlDocument();
+            XNamespace soapNs = SOAP_NAMESPACE_URI;
 
-            XmlDeclaration xmlDecl = req.CreateXmlDeclaration("1.0", null, null);
-            req.InsertBefore(xmlDecl, req.DocumentElement);
+            XDocument xReq = new XDocument(
+                    new XDeclaration ("1.0", null, null),
+                    new XElement (soapNs + "Envelope", 
+                        new XAttribute(XNamespace.Xmlns + "s", SOAP_NAMESPACE_URI),
+                        new XAttribute(soapNs + "encodingStyle", "http://schemas.xmlsoap.org/soap/encoding/"),
+                        new XElement(soapNs + "Body",
+                            request
+                        )
+                    )
+                );
 
-            XmlElement envelope = req.CreateElement("s", "Envelope", "http://schemas.xmlsoap.org/soap/envelope/");
-            XmlAttribute encodingAttribute = req.CreateAttribute("s", "encodingStyle", "http://schemas.xmlsoap.org/soap/envelope/");
-            encodingAttribute.InnerText = "http://schemas.xmlsoap.org/soap/encoding/";
-            envelope.SetAttributeNode(encodingAttribute);
+            Debug.WriteLine(xReq.ToXmlDocument().AsString());
 
-            req.AppendChild(envelope);
+            string serviceFuncName = request.Name.LocalName;
 
-            XmlElement body = req.CreateElement("s", "Body", "http://schemas.xmlsoap.org/soap/envelope/");
-            envelope.AppendChild(body);
+            WebRequest wr = HttpWebRequest.Create(serviceControlUri);
+            wr.Method = "POST";
 
-            XmlNode bodyRequest = body.OwnerDocument.ImportNode(request.DocumentElement, true);
-            body.AppendChild(bodyRequest);
+            byte[] b = Encoding.UTF8.GetBytes(xReq.ToString());
+            wr.Headers.Add("SOAPACTION", "\"urn:schemas-upnp-org:service:WANIPConnection:1#" + serviceFuncName + "\"");
+            wr.ContentType = "text/xml; charset=\"utf-8\"";
+            wr.ContentLength = b.Length;
+            wr.GetRequestStream().Write(b, 0, b.Length);
 
-            Debug.WriteLine(req.AsString());
+            WebResponse wres = wr.GetResponse();
+            Stream streamResp = wres.GetResponseStream();
+            XDocument xResp = XDocument.Load(streamResp);
 
-            XmlDocument resp = new XmlDocument() ;
-
-            string func = request.DocumentElement.LocalName;
-
-            WebRequest r = HttpWebRequest.Create(serviceControlUri);
-            r.Method = "POST";
-            byte[] b = Encoding.UTF8.GetBytes(req.OuterXml);
-            r.Headers.Add("SOAPACTION", "\"urn:schemas-upnp-org:service:WANIPConnection:1#" + func + "\"");
-            r.ContentType = "text/xml; charset=\"utf-8\"";
-            r.ContentLength = b.Length;
-            r.GetRequestStream().Write(b, 0, b.Length);
-
-            WebResponse wres = r.GetResponse();
-            Stream ress = wres.GetResponseStream();
-            resp.Load(ress);
-
-            return resp ;
+            return xResp ;
         }
     }
 
