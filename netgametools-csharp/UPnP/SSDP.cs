@@ -146,7 +146,7 @@ namespace chainedlupine.UPnP
                         }
                         catch (Exception e)
                         {
-                            Debug.WriteLine(string.Format("Unable to retrive profile: {0}", e.Message));
+                            Debug.WriteLine(string.Format("Unable to retrieve profile: {0}", e.Message));
                         }
 
                         if (device.uuid != null && !devices.isPresent(device))

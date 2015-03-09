@@ -128,6 +128,13 @@ namespace chainedlupine.UPnP
                 {
                     ServiceWANIPConnection service = new ServiceWANIPConnection(deviceUri, profileXML, nsMgr, xnServiceNode);
                     services.Add(service);
+
+                    XmlDocument woo = new XmlDocument();
+                    XmlElement action = woo.CreateElement("u", "GetExternalIPAddress", "urn:schemas-upnp-org:service:WANIPConnection:1");
+                    woo.AppendChild(action);
+
+                    XmlDocument resp = service.ExecSOAPRequest(woo);
+                    Debug.WriteLine(resp.AsString());
                 }
 
                 /*XmlNode xnServiceUrl = xnServiceNode.SelectSingleNode("tns:SCPDURL/text()", nsMgr);
