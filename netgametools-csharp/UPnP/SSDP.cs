@@ -13,16 +13,16 @@ namespace chainedlupine.UPnP
 {
     class DeviceList
     {
-        List<Device> list = new List<Device>();
+        List<Device> _list = new List<Device>();
 
         public void Add (Device device)
         {
-            list.Add(device);
+            _list.Add(device);
         }
 
         public bool isPresent (Device device)
         {
-            foreach (Device d in list)
+            foreach (Device d in _list)
             {
                 if (d.uuid == device.uuid)
                     return true;
@@ -32,11 +32,11 @@ namespace chainedlupine.UPnP
 
         public List<Device> ToList()
         {
-            return list ;
+            return new List<Device>(_list);
         }
     }
 
-    class httpresponse
+    public class httpresponse
     {
         public int status = -1;
         public string statusText = "";
@@ -81,7 +81,7 @@ namespace chainedlupine.UPnP
         }
     }
 
-    class ssdp
+    public class SSDP
     {
         public const string DEVICETYPE_ROOTDEVICE = "upnp:rootdevice" ;
         public const string DEVICETYPE_ALL = "ssdp:all";

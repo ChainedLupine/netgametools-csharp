@@ -19,7 +19,7 @@ namespace netgametools_csharp
     {
         private BindingSource pcBindingSource = new BindingSource();
 
-        private List<Device> uPnPDevices;
+        ControlPoint cp = new ControlPoint();        
 
         public UPnPConfigUI()
         {
@@ -153,15 +153,20 @@ namespace netgametools_csharp
             grpDevice.Enabled = false;
             listViewDevices.Items.Clear();
 
-            foreach (Device device in uPnPDevices)
+            foreach (Device device in cp.knownDeviceList)
             {
-                if (checkBoxIGDOnly.Checked && device.deviceType != Device.DeviceTypeEnum.InternetGatewayDevice)
+                if (checkBoxIGDOnly.Checked && !DeviceGateway.isGateway(device))
                     continue;
 
                 ListViewItem item = new ListViewItem(device.descFriendlyName);
                 item.SubItems.Add(device.descModelName);
                 item.SubItems.Add(device.descManufacturer);
-                item.SubItems.Add("N/A");
+
+                if (DeviceGateway.isGateway(device))
+                    item.SubItems.Add(DeviceGateway.GetExternalIP(device));
+                else
+                    item.SubItems.Add("None");
+
                 item.SubItems.Add(device.uuid);
 
                 listViewDevices.Items.Add(item);
@@ -170,8 +175,6 @@ namespace netgametools_csharp
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            ssdp ssdpDiscoverer = new ssdp();
-
             WriteStatus("Searching!", Color.Blue);
             using (SearchBusyForm busyForm = new SearchBusyForm())
             {
@@ -192,11 +195,10 @@ namespace netgametools_csharp
                 busyForm.Show();
                 busyForm.Update();
 
-                uPnPDevices = ssdpDiscoverer.Discover(ssdp.DEVICETYPE_ROOTDEVICE);
 
-                if (uPnPDevices.Count > 0)
+                if (cp.FindAllDevices())
                 {
-                    WriteStatus(string.Format("Found {0} devices on network!", uPnPDevices.Count));
+                    WriteStatus(string.Format("Found {0} devices on network!", cp.knownDeviceList.Count));
                     BuildSelectedDeviceList();
 
                 }

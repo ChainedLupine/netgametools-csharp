@@ -14,36 +14,78 @@ namespace chainedlupine.UPnP
 {
     public class Service
     {
-        protected List<String> supportedActions = new List<String>();
+        public string serviceType;
 
-        protected Uri serviceControlUri ;
+        public Uri serviceControlUri;
+        public Uri serviceDescUri;
+        public List<String> supportedActions = new List<String>();
+
+        public IService serviceInterface ;
 
         protected const string SOAP_NAMESPACE_URI = "http://schemas.xmlsoap.org/soap/envelope/" ;
 
-        public Service(Uri deviceUri, XmlDocument profileXML, XmlNamespaceManager nsMgr, XmlNode descNode)
+        private static List<IService> _registeredServiceInterfaces ;
+
+        public Service(Uri deviceUri, XNamespace ns, XElement xServiceDesc)
         {
-            XmlNode xnServiceType = descNode.SelectSingleNode("tns:serviceType/text()", nsMgr);
-            XmlNode xnServiceDescUrl = descNode.SelectSingleNode("tns:SCPDURL/text()", nsMgr);
-            Uri descriptionUrl = new Uri(deviceUri, xnServiceDescUrl.InnerText);
 
-            XmlNode xnServiceControlUrl = descNode.SelectSingleNode("tns:controlURL/text()", nsMgr);
-            serviceControlUri = new Uri(deviceUri, xnServiceControlUrl.InnerText);
+            serviceType = xServiceDesc.Element(ns + "serviceType").Value;
+            serviceControlUri = new Uri(deviceUri, xServiceDesc.Element(ns + "controlURL").Value);
+            serviceDescUri = new Uri(deviceUri, xServiceDesc.Element(ns + "SCPDURL").Value);
 
-            XmlDocument serviceDescXML = new XmlDocument();
-            serviceDescXML.Load(WebRequest.Create(descriptionUrl.ToString()).GetResponse().GetResponseStream());
+            // Load service description
+            XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
 
-            XmlNamespaceManager nsServiceMgr = new XmlNamespaceManager(serviceDescXML.NameTable);
-            nsServiceMgr.AddNamespace("tns", "urn:schemas-upnp-org:service-1-0");
+            XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
 
-            XmlNodeList actionListNode = serviceDescXML.SelectNodes("//tns:actionList/descendant::tns:action", nsServiceMgr);
-            foreach (XmlNode xnAction in actionListNode)
+            foreach (XElement xAction in xDesc.Descendants(nsService + "action"))
             {
-                XmlNode xnName = xnAction.SelectSingleNode("tns:name/text()", nsServiceMgr);
-                supportedActions.Add(xnName.InnerText);
-                //Debug.WriteLine(xnName.InnerText);
+                string actionName = xAction.Element(nsService + "name").Value;
+                supportedActions.Add(actionName);
             }
 
+            Debug.WriteLine(string.Format("Found {0} actions for service {1}", supportedActions.Count, serviceType));
 
+        }
+
+        public static void RegisterInterfaces()
+        {
+            _registeredServiceInterfaces = new List<IService>() ;
+            _registeredServiceInterfaces.Add(new IServiceWANIPConnection());
+        }
+
+        public static Service GetServiceOfType (List<Service> services, string serviceUrn)
+        {
+            foreach (Service service in services)
+            {
+                if (service.serviceType == serviceUrn)
+                    return service;
+            }
+
+            return null;
+        }
+
+        public static List<Service> LoadServices(Uri deviceUri, XNamespace ns, IEnumerable<XElement> xServiceList)
+        {
+            List<Service> services = new List<Service>();
+
+            foreach (XElement xService in xServiceList)
+            {
+                Service service = new Service(deviceUri, ns, xService);
+                services.Add(service);
+
+                foreach (IService iService in _registeredServiceInterfaces)
+                {
+                    Debug.WriteLine(iService.getServiceUrn());
+                    if (service.serviceType == iService.getServiceUrn())
+                    {
+                        IService newServiceInterface = iService.newInstance();
+                        newServiceInterface.setService(service);
+                    }
+                }
+            }
+
+            return services;
         }
 
         // Returns the response
@@ -83,20 +125,66 @@ namespace chainedlupine.UPnP
         }
     }
 
-    public class ServiceWANIPConnection: Service
+    public interface IService
     {
-        public ServiceWANIPConnection(Uri deviceUri, XmlDocument profileXML, XmlNamespaceManager nsMgr, XmlNode descNode)
-            : base(deviceUri, profileXML, nsMgr, descNode)
-        {
+        string getServiceUrn();
+        void setService(Service service);
+        IService newInstance();
+    }
 
+    public class IServiceBase: IService
+    {
+        protected Service _service;
+        virtual public string getServiceUrn() { return ""; } 
+
+        public void setService(Service service)
+        {
+            _service = service;
+            _service.serviceInterface = this;
+        }
+
+        virtual public IService newInstance()
+        {
+            return new IServiceBase();
+        }
+
+    }
+
+    public class IServiceWANIPConnection : IServiceBase
+    {
+        override public string getServiceUrn() { return "urn:schemas-upnp-org:service:WANIPConnection:1"; }
+
+        private string _serviceNamespaceURN = "urn:schemas-upnp-org:service:WANIPConnection:1";
+        XNamespace _uNs;
+
+        public IServiceWANIPConnection()
+        {
+            _uNs = _serviceNamespaceURN;
+        }
+
+        override public IService newInstance()
+        {
+            return new IServiceWANIPConnection();
         }
 
         public string getExternalIP()
         {
-            if (supportedActions.IndexOf("GetExternalIPAddress") == -1)
+            if (_service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
                 return null;
 
             string ip = "";
+
+            XElement woo = new XElement(_uNs + "GetExternalIPAddress",
+                    new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN)
+                );
+
+            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+
+            ip = (from el in xResp.Descendants()
+                 where el.Name == "NewExternalIPAddress"
+                 select el).Single().Value;
+
 
             return ip;
         }

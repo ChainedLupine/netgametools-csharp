@@ -51,7 +51,8 @@ namespace chainedlupine.UPnP
             }
         }
     }
-    class Device
+    
+    public class Device
     {
 
         public enum DeviceTypeEnum { InternetGatewayDevice, Unknown } ;
@@ -70,7 +71,6 @@ namespace chainedlupine.UPnP
         public string descModelDesc;
         public string descSerialNumber;
 
-        public string descDeviceType;
         public DeviceTypeEnum deviceType;
 
         public List<Service> services = new List<Service>();
@@ -87,46 +87,32 @@ namespace chainedlupine.UPnP
 
         public void retrieveDeviceProfile()
         {
-            XmlDocument profileXML = new XmlDocument();
+            XDocument xDeviceProfile ;
+
             try
             {
-                profileXML.Load(WebRequest.Create(deviceUri.ToString()).GetResponse().GetResponseStream());
+                 xDeviceProfile = XDocument.Load(WebRequest.Create(deviceUri.ToString()).GetResponse().GetResponseStream());
             }
             catch
             {
                 throw new Exception("Unable to load device description XML from " + deviceUri.ToString());
             }
 
-            //Debug.WriteLine (profileXML.AsString()) ;
-            XmlNamespaceManager nsMgr = new XmlNamespaceManager(profileXML.NameTable);
-            nsMgr.AddNamespace("tns", "urn:schemas-upnp-org:device-1-0");
-                
-            // get core description
-            XmlNode node = profileXML.SelectSingleNode("//tns:device/tns:deviceType/text()", nsMgr);
-            descDeviceType = node.InnerText;
-            setDeviceType(node.InnerText);
+            XNamespace deviceNs = "urn:schemas-upnp-org:device-1-0";
 
-            node = profileXML.SelectSingleNode("//tns:device/tns:friendlyName/text()", nsMgr);
-            descFriendlyName = node.InnerText;
+            XElement xDevice = xDeviceProfile.Element (deviceNs + "root").Element(deviceNs + "device");
 
-            node = profileXML.SelectSingleNode("//tns:device/tns:manufacturer/text()", nsMgr);
-            descManufacturer = node.InnerText;
+            XElement xNode = xDevice.Element(deviceNs + "deviceType");
+            setDeviceType(xNode.Value);
 
-            node = profileXML.SelectSingleNode("//tns:device/tns:modelName/text()", nsMgr);
-            descModelName = node.InnerText;
+            descFriendlyName = xDevice.Element(deviceNs + "friendlyName").Value;
+            descManufacturer = xDevice.Element(deviceNs + "manufacturer").Value;
+            descModelName = xDevice.Element(deviceNs + "manufacturer").Value;
+            descModelNumber = xDevice.Element(deviceNs + "manufacturer").Value;
+            descModelDesc = xDevice.Element(deviceNs + "manufacturer").Value;
+            descSerialNumber = xDevice.Element(deviceNs + "manufacturer").Value;
 
-            node = profileXML.SelectSingleNode("//tns:device/tns:modelNumber/text()", nsMgr);
-            descModelNumber = node.InnerText;
-
-            node = profileXML.SelectSingleNode("//tns:device/tns:modelDescription/text()", nsMgr);
-            descModelDesc = node.InnerText;
-
-            node = profileXML.SelectSingleNode("//tns:device/tns:serialNumber/text()", nsMgr);
-            descSerialNumber = node.InnerText;
-
-            node = profileXML.SelectSingleNode("//tns:device/tns:UDN/text()", nsMgr);
-
-            MatchCollection matches = Regex.Matches (node.InnerText, @"^uuid:([\w\d-]+)") ;
+            MatchCollection matches = Regex.Matches(xDevice.Element(deviceNs + "UDN").Value, @"^uuid:([\w\d-]+)");
 
             if (matches.Count == 1 && matches[0].Groups.Count == 2)
             {
@@ -135,48 +121,28 @@ namespace chainedlupine.UPnP
             else
                 uuid = null;
 
-            XmlNodeList xnlServiceDescList = profileXML.SelectNodes("//tns:device/tns:serviceList/descendant::tns:service", nsMgr);
-            foreach (XmlNode xnServiceNode in xnlServiceDescList)
-            {
-                XmlNode xnServiceType = xnServiceNode.SelectSingleNode("tns:serviceType/text()", nsMgr);
-                XmlNode xnServiceUrl = xnServiceNode.SelectSingleNode("tns:SCPDURL/text()", nsMgr);
-                Uri descriptionUrl = new Uri(deviceUri, xnServiceUrl.InnerText);
+            IEnumerable<XElement> xServiceDescs = xDevice.Descendants(deviceNs + "service");
 
-                Debug.WriteLine(string.Format("service {0} desc url={1}", xnServiceType.InnerText, descriptionUrl.ToString()));
-
-                if (xnServiceType.InnerText.Contains ("urn:schemas-upnp-org:service:WANIPConnection"))
-                {
-                    ServiceWANIPConnection service = new ServiceWANIPConnection(deviceUri, profileXML, nsMgr, xnServiceNode);
-                    services.Add(service);
-
-                    /*XmlDocument woo = new XmlDocument();
-                    XmlElement action = woo.CreateElement("u", "GetExternalIPAddress", "urn:schemas-upnp-org:service:WANIPConnection:1");
-                    woo.AppendChild(action);*/
-
-                    string serviceNamespaceURN = "urn:schemas-upnp-org:service:WANIPConnection:1" ;
-                    XNamespace uNs = serviceNamespaceURN;
-
-                    XElement woo = new XElement(uNs + "GetExternalIPAddress",
-                            new XAttribute(XNamespace.Xmlns + "u", serviceNamespaceURN)
-                        );
-
-                    XDocument resp = service.ExecSOAPRequest(woo);
-                    Debug.WriteLine(resp.ToXmlDocument().AsString());
-                }
-
-                /*XmlNode xnServiceUrl = xnServiceNode.SelectSingleNode("tns:SCPDURL/text()", nsMgr);
-                Uri descriptionUrl = new Uri(deviceUri, xnServiceUrl.InnerText);
-
-                XmlNode xnServiceType = xnServiceNode.SelectSingleNode("tns:serviceType/text()", nsMgr);
-
-                Debug.WriteLine(string.Format("service {0} desc url={1}", xnServiceType.InnerText, descriptionUrl.ToString()));
-
-                XmlDocument serviceDescXML = new XmlDocument();
-                serviceDescXML.Load(WebRequest.Create(descriptionUrl.ToString()).GetResponse().GetResponseStream());
-                //Debug.WriteLine(serviceDescXML.AsString());
-                 * */
-            }
-
+            services = Service.LoadServices(deviceUri, deviceNs, xServiceDescs);
         }
+    }
+
+    public class DeviceGateway
+    {
+        static public bool isGateway(Device device)
+        {
+            return device.deviceType == Device.DeviceTypeEnum.InternetGatewayDevice;
+        }
+
+        static public string GetExternalIP(Device device)
+        {
+            Service test = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            IServiceWANIPConnection wanService = test.serviceInterface as IServiceWANIPConnection;
+
+            //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
+
+            return wanService.getExternalIP() ;
+        }
+
     }
 }
