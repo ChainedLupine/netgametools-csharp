@@ -117,7 +117,15 @@ namespace chainedlupine.UPnP
             wr.ContentLength = b.Length;
             wr.GetRequestStream().Write(b, 0, b.Length);
 
-            WebResponse wres = wr.GetResponse();
+            WebResponse wres ;
+            try
+            {
+                wres = wr.GetResponse();
+            } catch (WebException we)
+            {
+                throw new Exception(string.Format("Unable to complete SOAP request for action {0}, error {1}!", serviceFuncName, ((HttpWebResponse)we.Response).StatusCode));
+            }
+
             Stream streamResp = wres.GetResponseStream();
             XDocument xResp = XDocument.Load(streamResp);
 
@@ -167,10 +175,10 @@ namespace chainedlupine.UPnP
             return new IServiceWANIPConnection();
         }
 
-        public string getExternalIP()
+        public string GetExternalIP()
         {
             if (_service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
-                return null;
+                throw new Exception("GetExternalIPAddress not supported!");
 
             string ip = "";
 
@@ -188,5 +196,66 @@ namespace chainedlupine.UPnP
 
             return ip;
         }
+
+        public int GetPortMappingNumberOfEntries()
+        {
+            //if (_service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
+              //  throw new Exception("GetPortMappingNumberOfEntries not supported!");
+
+            XElement woo = new XElement(_uNs + "GetPortMappingNumberOfEntries",
+                    new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN)
+                );
+
+            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+
+            string result = (from el in xResp.Descendants()
+                  where el.Name == "PortMappingNumberOfEntries"
+                  select el).Single().Value;
+
+
+            return Convert.ToInt32(result);
+        }
+
+        public List<DeviceGatewayPortRecord> GetPortMappingEntries()
+        {
+            List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
+
+            int portIndex = 0;
+
+            do
+            {
+                XElement xAction = new XElement(_uNs + "GetGenericPortMappingEntry",
+                        new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
+                        new XElement("NewPortMappingIndex", portIndex.ToString())
+                    );
+
+                try
+                {
+                    XDocument xResp = _service.ExecSOAPRequest(xAction);
+
+                    DeviceGatewayPortRecord portRec = new DeviceGatewayPortRecord();
+                    portRec.RemoteHost = xResp.Descendants("NewRemoteHost").Single().Value;
+                    portRec.InternalClient = xResp.Descendants("NewInternalClient").Single().Value;
+                    portRec.ExternalPort = Convert.ToUInt16(xResp.Descendants("NewExternalPort").Single().Value);
+                    portRec.InternalPort = Convert.ToUInt16(xResp.Descendants("NewInternalPort").Single().Value);
+                    portRec.Protocol = xResp.Descendants("NewProtocol").Single().Value;
+                    portRec.Desc = xResp.Descendants("NewPortMappingDescription").Single().Value;
+                    portRec.LeaseDuration = Convert.ToInt32(xResp.Descendants("NewLeaseDuration").Single().Value);
+                    
+                    mappings.Add(portRec);
+
+                    //Debug.WriteLine(xResp.ToXmlDocument().AsString());
+                    portIndex++;
+                } catch
+                {
+                    portIndex = -1;
+                }
+
+            } while (portIndex > 0);
+
+            return mappings;
+        }
+
     }
 }

@@ -127,6 +127,19 @@ namespace chainedlupine.UPnP
         }
     }
 
+    public class DeviceGatewayPortRecord
+    {
+        public string RemoteHost;
+        public ushort ExternalPort;
+        public string Protocol;
+        public ushort InternalPort;
+        public string InternalClient;
+        public bool Enabled;
+        public string Desc;
+        public int LeaseDuration;
+    }
+
+
     public class DeviceGateway
     {
         static public bool isGateway(Device device)
@@ -136,12 +149,59 @@ namespace chainedlupine.UPnP
 
         static public string GetExternalIP(Device device)
         {
-            Service test = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
-            IServiceWANIPConnection wanService = test.serviceInterface as IServiceWANIPConnection;
+            if (!isGateway(device))
+                throw new Exception("This device is not an internet gateway!");
+
+            Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            if (service == null)
+                throw new Exception("No WANIPConnection service on this device!");
+
+            IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
             //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
 
-            return wanService.getExternalIP() ;
+            return wanService.GetExternalIP() ;
+        }
+
+        static public int GetPortMappingNumberOfEntries(Device device)
+        {
+            if (!isGateway(device))
+                throw new Exception("This device is not an internet gateway!");
+
+            Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            if (service == null)
+                throw new Exception("No WANIPConnection service on this device!");
+
+            IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
+
+            //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
+
+            return wanService.GetPortMappingNumberOfEntries();
+        }
+
+        static public List<DeviceGatewayPortRecord> GetPortMappingEntries(Device device)
+        {
+            if (!isGateway(device))
+                throw new Exception("This device is not an internet gateway!");
+
+            List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
+
+            Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            if (service == null)
+                throw new Exception("No WANIPConnection service on this device!");
+
+            IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
+
+            try
+            {
+                mappings = wanService.GetPortMappingEntries();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(string.Format("Failure to map ports: {0}", e.Message));
+            }
+
+            return mappings;
         }
 
     }

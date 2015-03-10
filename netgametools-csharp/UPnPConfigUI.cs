@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using chainedlupine.UPnP;
+using System.Diagnostics;
 
 namespace netgametools_csharp
 {
@@ -163,7 +164,11 @@ namespace netgametools_csharp
                 item.SubItems.Add(device.descManufacturer);
 
                 if (DeviceGateway.isGateway(device))
+                {
                     item.SubItems.Add(DeviceGateway.GetExternalIP(device));
+                    //Debug.WriteLine(string.Format("ports mapped={0}", DeviceGateway.GetPortMappingNumberOfEntries(device)));
+                    //List<DeviceGatewayPortRecord> mappings = DeviceGateway.GetPortMappingEntries(device);
+                } 
                 else
                     item.SubItems.Add("None");
 
@@ -225,6 +230,40 @@ namespace netgametools_csharp
         private void checkBoxIGDOnly_CheckedChanged(object sender, EventArgs e)
         {
             BuildSelectedDeviceList();
+        }
+
+        private void listViewDevices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewDevices.SelectedItems.Count > 0)
+            {
+                grpDevice.Enabled = true;
+
+                string uuid = listViewDevices.SelectedItems[0].SubItems[4].Text;
+
+                Device device = cp.FindDeviceByUUID(uuid);
+
+                if (device != null)
+                {
+                    listViewDeviceMappings.Items.Clear();
+
+                    if (DeviceGateway.isGateway(device))
+                    {
+                        List<DeviceGatewayPortRecord> mappings = DeviceGateway.GetPortMappingEntries(device);
+
+                        foreach (DeviceGatewayPortRecord portRec in mappings)
+                        {
+                            ListViewItem item = new ListViewItem(portRec.Desc);
+                            item.SubItems.Add(portRec.InternalClient);
+                            item.SubItems.Add(portRec.Protocol);
+                            item.SubItems.Add(portRec.InternalPort.ToString());
+                            item.SubItems.Add(portRec.ExternalPort.ToString());
+                            listViewDeviceMappings.Items.Add(item);
+                        }
+                    }
+                }
+            }
+            else
+                grpDevice.Enabled = false;
         }
 
 

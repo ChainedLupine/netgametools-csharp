@@ -28,6 +28,16 @@ namespace chainedlupine.UPnP
             return _uPnPDevices.Count > 0;
         }
 
+        public Device FindDeviceByUUID(string uuid)
+        {
+            foreach (Device device in _uPnPDevices)
+            {
+                if (device.uuid == uuid)
+                    return device;
+            }
+            return null;
+        }
+
 
     }
 

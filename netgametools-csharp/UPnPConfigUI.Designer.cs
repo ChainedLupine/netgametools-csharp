@@ -33,6 +33,7 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSearch = new System.Windows.Forms.Button();
             this.grpDeviceList = new System.Windows.Forms.GroupBox();
             this.checkBoxIGDOnly = new System.Windows.Forms.CheckBox();
@@ -70,7 +71,6 @@
             this.btnPortCollectionRemove = new System.Windows.Forms.Button();
             this.btnPortCollectionAdd = new System.Windows.Forms.Button();
             this.textStatus = new System.Windows.Forms.TextBox();
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpDeviceList.SuspendLayout();
             this.grpDevice.SuspendLayout();
             this.groupIGDInfo.SuspendLayout();
@@ -98,6 +98,7 @@
             this.listViewDevices.TabIndex = 0;
             this.listViewDevices.UseCompatibleStateImageBehavior = false;
             this.listViewDevices.View = System.Windows.Forms.View.Details;
+            this.listViewDevices.SelectedIndexChanged += new System.EventHandler(this.listViewDevices_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -118,6 +119,11 @@
             // 
             this.columnHeader2.Text = "External IPv4";
             this.columnHeader2.Width = 120;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "UUID";
+            this.columnHeader10.Width = 220;
             // 
             // btnSearch
             // 
@@ -307,7 +313,7 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Internal IPv4";
-            this.columnHeader4.Width = 90;
+            this.columnHeader4.Width = 87;
             // 
             // columnHeader5
             // 
@@ -507,11 +513,6 @@
             this.textStatus.ReadOnly = true;
             this.textStatus.Size = new System.Drawing.Size(887, 20);
             this.textStatus.TabIndex = 7;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "UUID";
-            this.columnHeader10.Width = 220;
             // 
             // UPnPConfigUI
             // 
