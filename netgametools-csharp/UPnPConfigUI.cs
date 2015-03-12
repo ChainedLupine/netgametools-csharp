@@ -20,11 +20,17 @@ namespace netgametools_csharp
     {
         private BindingSource pcBindingSource = new BindingSource();
 
-        ControlPoint cp = new ControlPoint();        
+        ControlPoint cp = new ControlPoint();
+
+        NetworkControl networkControl;
 
         public UPnPConfigUI()
         {
             InitializeComponent();
+
+            networkControl = new NetworkControl();
+            networkControl.LoadNetworkInterfaces();
+
 
             pcBindingSource.DataSource = typeof(PortCollectionDetail);
             pcBindingSource.AllowNew = true;
@@ -37,60 +43,8 @@ namespace netgametools_csharp
             dataGridViewCollection.DataSource = pcBindingSource;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            /*try
-            {
-                Console.WriteLine(UPnP.NAT.Discover());
-                System.Windows.Forms.MessageBox.Show("You have an UPnP-enabled router and your IP is: " + UPnP.NAT.GetExternalIP());
-            }
-            catch
-            {
-                System.Windows.Forms.MessageBox.Show("You do not have an UPnP-enabled router.");
-            }
-            */
-        }
-
-
         private void On_Load(object sender, EventArgs e)
         {
-
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (item.NetworkInterfaceType != NetworkInterfaceType.Loopback && item.OperationalStatus == OperationalStatus.Up)
-                {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            comboAdapters.Items.Add(item.Name);
-                        }
-                    }
-                }
-            }
-
-            if (comboAdapters.Items.Count > 0)
-                comboAdapters.SelectedIndex = 0;
-        }
-
-        private void comboAdapters_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            textCurrentIP.Text = "NO IPV4 ADDRESS";
-
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (item.Name.Contains (comboAdapters.Text))
-                {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            textCurrentIP.Text = ip.Address.ToString() ;
-                        }
-                    }
-                }
-            }
-
         }
 
         private void comboPortCollections_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,12 +105,11 @@ namespace netgametools_csharp
 
         private void BuildSelectedDeviceList()
         {
-            grpDevice.Enabled = false;
             listViewDevices.Items.Clear();
 
             foreach (Device device in cp.knownDeviceList)
             {
-                if (checkBoxIGDOnly.Checked && !DeviceGateway.isGateway(device))
+                if (networkControl.optionShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
                     continue;
 
                 ListViewItem item = new ListViewItem(device.descFriendlyName);
@@ -234,6 +187,7 @@ namespace netgametools_csharp
 
         private void listViewDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
+            /*
             if (listViewDevices.SelectedItems.Count > 0)
             {
                 grpDevice.Enabled = true;
@@ -264,6 +218,7 @@ namespace netgametools_csharp
             }
             else
                 grpDevice.Enabled = false;
+           */
         }
 
 
