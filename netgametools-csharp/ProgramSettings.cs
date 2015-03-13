@@ -21,11 +21,13 @@ namespace netgametools_csharp
 
     class ProgramSettings
     {
-        static List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
+        static public List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
 
         static public bool optionShowOnlyNetworkDevices = true;
 
         static public ControlPoint cp;
+
+        static public int selectedAdapter;
 
         static public void Init()
         {
@@ -37,6 +39,11 @@ namespace netgametools_csharp
         {
             child.StartPosition = FormStartPosition.Manual;
             child.Location = new Point(parent.Location.X + (parent.Width - child.Width) / 2, parent.Location.Y + (parent.Height - child.Height) / 2);
+        }
+
+        static public Device SelectDeviceByUUID(string uuid)
+        {
+            return cp.FindDeviceByUUID(uuid);
         }
 
         static public void LoadNetworkInterfaces()
@@ -54,10 +61,13 @@ namespace netgametools_csharp
                             NetworkAdapterDetail detail = new NetworkAdapterDetail() ;
                             detail.address = IPAddress.Parse (ip.Address.ToString()) ;
                             detail.name = item.Name ;
+                            adapters.Add(detail);
                         }
                     }
                 }
             }
+
+            selectedAdapter = 0;
 
          //   if (comboAdapters.Items.Count > 0)
           //      comboAdapters.SelectedIndex = 0;

@@ -60,6 +60,7 @@
             this.comboAdapters.Name = "comboAdapters";
             this.comboAdapters.Size = new System.Drawing.Size(298, 21);
             this.comboAdapters.TabIndex = 11;
+            this.comboAdapters.SelectedIndexChanged += new System.EventHandler(this.comboAdapters_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -81,7 +82,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 52);
+            this.label2.Location = new System.Drawing.Point(7, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 8;
@@ -132,6 +133,7 @@
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

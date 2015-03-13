@@ -18,7 +18,6 @@ namespace netgametools_csharp
 
     public partial class UPnPConfigUI : Form
     {
-        ProgramSettings settings;
 
         public UPnPConfigUI()
         {
@@ -119,38 +118,7 @@ namespace netgametools_csharp
 
         private void listViewDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*
-            if (listViewDevices.SelectedItems.Count > 0)
-            {
-                grpDevice.Enabled = true;
-
-                string uuid = listViewDevices.SelectedItems[0].SubItems[4].Text;
-
-                Device device = cp.FindDeviceByUUID(uuid);
-
-                if (device != null)
-                {
-                    listViewDeviceMappings.Items.Clear();
-
-                    if (DeviceGateway.isGateway(device))
-                    {
-                        List<DeviceGatewayPortRecord> mappings = DeviceGateway.GetPortMappingEntries(device);
-
-                        foreach (DeviceGatewayPortRecord portRec in mappings)
-                        {
-                            ListViewItem item = new ListViewItem(portRec.Desc);
-                            item.SubItems.Add(portRec.InternalClient);
-                            item.SubItems.Add(portRec.Protocol);
-                            item.SubItems.Add(portRec.InternalPort.ToString());
-                            item.SubItems.Add(portRec.ExternalPort.ToString());
-                            listViewDeviceMappings.Items.Add(item);
-                        }
-                    }
-                }
-            }
-            else
-                grpDevice.Enabled = false;
-           */
+            btnConfig.Enabled = listViewDevices.SelectedItems.Count > 0; 
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -161,6 +129,19 @@ namespace netgametools_csharp
             form.ShowDialog();
 
             BuildSelectedDeviceList();
+        }
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            string uuid = listViewDevices.SelectedItems[0].SubItems[4].Text;
+
+            Device selectedDevice = ProgramSettings.SelectDeviceByUUID(uuid);
+
+            DeviceGatewayConfigForm form = new DeviceGatewayConfigForm();
+            form.Init(selectedDevice);
+
+            //ProgramSettings.CenterFormToParentClientArea(this, form);
+            form.ShowDialog(); 
         }
 
 

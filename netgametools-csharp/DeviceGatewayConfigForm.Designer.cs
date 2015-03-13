@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.grpDevice = new System.Windows.Forms.GroupBox();
-            this.groupIGDInfo = new System.Windows.Forms.GroupBox();
+            this.grpIGDInfo = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnRemoveForward = new System.Windows.Forms.Button();
             this.textDeviceExternalIP = new System.Windows.Forms.TextBox();
@@ -45,14 +45,14 @@
             this.textDeviceName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.grpDevice.SuspendLayout();
-            this.groupIGDInfo.SuspendLayout();
+            this.grpIGDInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpDevice
             // 
             this.grpDevice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.grpDevice.Controls.Add(this.groupIGDInfo);
+            this.grpDevice.Controls.Add(this.grpIGDInfo);
             this.grpDevice.Controls.Add(this.textDeviceModel);
             this.grpDevice.Controls.Add(this.label5);
             this.grpDevice.Controls.Add(this.textDeviceName);
@@ -65,21 +65,21 @@
             this.grpDevice.TabStop = false;
             this.grpDevice.Text = "Device";
             // 
-            // groupIGDInfo
+            // grpIGDInfo
             // 
-            this.groupIGDInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grpIGDInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupIGDInfo.Controls.Add(this.label6);
-            this.groupIGDInfo.Controls.Add(this.btnRemoveForward);
-            this.groupIGDInfo.Controls.Add(this.textDeviceExternalIP);
-            this.groupIGDInfo.Controls.Add(this.btnAddForward);
-            this.groupIGDInfo.Controls.Add(this.listViewDeviceMappings);
-            this.groupIGDInfo.Location = new System.Drawing.Point(10, 69);
-            this.groupIGDInfo.Name = "groupIGDInfo";
-            this.groupIGDInfo.Size = new System.Drawing.Size(515, 386);
-            this.groupIGDInfo.TabIndex = 12;
-            this.groupIGDInfo.TabStop = false;
-            this.groupIGDInfo.Text = "Internet Gateway Info";
+            this.grpIGDInfo.Controls.Add(this.label6);
+            this.grpIGDInfo.Controls.Add(this.btnRemoveForward);
+            this.grpIGDInfo.Controls.Add(this.textDeviceExternalIP);
+            this.grpIGDInfo.Controls.Add(this.btnAddForward);
+            this.grpIGDInfo.Controls.Add(this.listViewDeviceMappings);
+            this.grpIGDInfo.Location = new System.Drawing.Point(10, 69);
+            this.grpIGDInfo.Name = "grpIGDInfo";
+            this.grpIGDInfo.Size = new System.Drawing.Size(515, 386);
+            this.grpIGDInfo.TabIndex = 12;
+            this.grpIGDInfo.TabStop = false;
+            this.grpIGDInfo.Text = "Internet Gateway Info";
             // 
             // label6
             // 
@@ -129,6 +129,8 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader8});
+            this.listViewDeviceMappings.FullRowSelect = true;
+            this.listViewDeviceMappings.GridLines = true;
             this.listViewDeviceMappings.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewDeviceMappings.Location = new System.Drawing.Point(9, 43);
             this.listViewDeviceMappings.MultiSelect = false;
@@ -205,10 +207,11 @@
             this.Controls.Add(this.grpDevice);
             this.Name = "DeviceGatewayConfigForm";
             this.Text = "DeviceGatewayConfigForm";
+            this.Load += new System.EventHandler(this.DeviceGatewayConfigForm_Load);
             this.grpDevice.ResumeLayout(false);
             this.grpDevice.PerformLayout();
-            this.groupIGDInfo.ResumeLayout(false);
-            this.groupIGDInfo.PerformLayout();
+            this.grpIGDInfo.ResumeLayout(false);
+            this.grpIGDInfo.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -216,7 +219,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox grpDevice;
-        private System.Windows.Forms.GroupBox groupIGDInfo;
+        private System.Windows.Forms.GroupBox grpIGDInfo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnRemoveForward;
         private System.Windows.Forms.TextBox textDeviceExternalIP;
