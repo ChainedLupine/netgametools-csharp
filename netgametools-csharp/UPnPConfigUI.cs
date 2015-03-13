@@ -18,98 +18,30 @@ namespace netgametools_csharp
 
     public partial class UPnPConfigUI : Form
     {
-        private BindingSource pcBindingSource = new BindingSource();
-
-        ControlPoint cp = new ControlPoint();
-
-        NetworkControl networkControl;
+        ProgramSettings settings;
 
         public UPnPConfigUI()
         {
+            ProgramSettings.Init();
+
             InitializeComponent();
 
-            networkControl = new NetworkControl();
-            networkControl.LoadNetworkInterfaces();
-
-
-            pcBindingSource.DataSource = typeof(PortCollectionDetail);
-            pcBindingSource.AllowNew = true;
-
-            DataGridViewComboBoxColumn col = dataGridViewCollection.Columns[0] as DataGridViewComboBoxColumn;
-            col.ValueType = typeof(ePortCollectionProtocol);
-            col.DataSource = Enum.GetValues(typeof(ePortCollectionProtocol));
-
-            dataGridViewCollection.AutoGenerateColumns = false;
-            dataGridViewCollection.DataSource = pcBindingSource;
         }
 
         private void On_Load(object sender, EventArgs e)
         {
         }
 
-        private void comboPortCollections_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox control = (ComboBox)sender;
-
-            if (control.SelectedIndex >= 0)
-            {
-                btnPortCollectionRemove.Enabled = true;
-                grpPortDetails.Enabled = true;
-                textCollectionTitle.Text = comboPortCollections.Text;
-
-                // Load datagrid
-                // Protocol (TCP/UDP), Port
-                pcBindingSource.Clear();
-                pcBindingSource.Add(new PortCollectionDetail(ePortCollectionProtocol.TCP, 1000));
-                pcBindingSource.Add(new PortCollectionDetail(ePortCollectionProtocol.UDP, 5000));
-
-                dataGridViewCollection.Visible = true;
-            }
-            else
-            {
-                grpPortDetails.Enabled = false;
-                btnPortCollectionRemove.Enabled = false;
-                dataGridViewCollection.Visible = false;
-            }
-                
-        }
-
-        private void btnPortCollectionAdd_Click(object sender, EventArgs e)
-        {
-            comboPortCollections.Items.Add("New Collection");
-            comboPortCollections.SelectedIndex = comboPortCollections.Items.Count - 1;
-        }
-
-        private void btnPortCollectionRemove_Click(object sender, EventArgs e)
-        {
-            comboPortCollections.Items.RemoveAt(comboPortCollections.SelectedIndex);
-
-            if (comboPortCollections.Items.Count > 0)
-                comboPortCollections.SelectedIndex = 0;
-            else
-            {
-                grpPortDetails.Enabled = false;
-                dataGridViewCollection.Visible = false;
-                comboPortCollections.Text = "";
-            }
-        }
-
-        private void textCollectionTitle_TextChanged(object sender, EventArgs e)
-        {
-            if (textCollectionTitle.Text.Length > 0)
-
-                comboPortCollections.Items[comboPortCollections.SelectedIndex] = textCollectionTitle.Text;
-            else
-                textCollectionTitle.Text = comboPortCollections.Text;
-        }
-
         private void BuildSelectedDeviceList()
         {
             listViewDevices.Items.Clear();
 
-            foreach (Device device in cp.knownDeviceList)
+            if (ProgramSettings.cp.knownDeviceList == null)
+                return;
+
+            foreach (Device device in ProgramSettings.cp.knownDeviceList)
             {
-                if (networkControl.optionShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
+                if (ProgramSettings.optionShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
                     continue;
 
                 ListViewItem item = new ListViewItem(device.descFriendlyName);
@@ -154,9 +86,9 @@ namespace netgametools_csharp
                 busyForm.Update();
 
 
-                if (cp.FindAllDevices())
+                if (ProgramSettings.cp.FindAllDevices())
                 {
-                    WriteStatus(string.Format("Found {0} devices on network!", cp.knownDeviceList.Count));
+                    WriteStatus(string.Format("Found {0} devices on network!", ProgramSettings.cp.knownDeviceList.Count));
                     BuildSelectedDeviceList();
 
                 }
@@ -219,6 +151,16 @@ namespace netgametools_csharp
             else
                 grpDevice.Enabled = false;
            */
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm form = new SettingsForm();
+
+            ProgramSettings.CenterFormToParentClientArea(this, form);
+            form.ShowDialog();
+
+            BuildSelectedDeviceList();
         }
 
 

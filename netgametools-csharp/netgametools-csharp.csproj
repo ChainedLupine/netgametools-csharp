@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigForm.cs">
+    <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigForm.Designer.cs">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DeviceGatewayConfigForm.cs">
       <SubType>Form</SubType>
@@ -56,7 +56,13 @@
     <Compile Include="DeviceGatewayConfigForm.Designer.cs">
       <DependentUpon>DeviceGatewayConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NetworkControl.cs" />
+    <Compile Include="PortCollectionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PortCollectionsForm.Designer.cs">
+      <DependentUpon>PortCollectionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProgramSettings.cs" />
     <Compile Include="SearchBusyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,11 +81,14 @@
     <Compile Include="UPnP\Device.cs" />
     <Compile Include="UPnP\Service.cs" />
     <Compile Include="UPnP\SSDP.cs" />
-    <EmbeddedResource Include="ConfigForm.resx">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceGatewayConfigForm.resx">
       <DependentUpon>DeviceGatewayConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PortCollectionsForm.resx">
+      <DependentUpon>PortCollectionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SearchBusyForm.resx">
       <DependentUpon>SearchBusyForm.cs</DependentUpon>

@@ -8,6 +8,8 @@ using System.Net.Sockets;
 using System.Net ;
 using chainedlupine.UPnP;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace netgametools_csharp
 {
@@ -17,13 +19,27 @@ namespace netgametools_csharp
         public IPAddress address ;
     }
 
-    class NetworkControl
+    class ProgramSettings
     {
-        List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
+        static List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
 
-        public bool optionShowOnlyNetworkDevices = true;
+        static public bool optionShowOnlyNetworkDevices = true;
 
-        public void LoadNetworkInterfaces()
+        static public ControlPoint cp;
+
+        static public void Init()
+        {
+            cp = new ControlPoint();
+            LoadNetworkInterfaces();
+        }
+
+        static public void CenterFormToParentClientArea(Form parent, Form child)
+        {
+            child.StartPosition = FormStartPosition.Manual;
+            child.Location = new Point(parent.Location.X + (parent.Width - child.Width) / 2, parent.Location.Y + (parent.Height - child.Height) / 2);
+        }
+
+        static public void LoadNetworkInterfaces()
         {
             adapters.Clear() ;
 

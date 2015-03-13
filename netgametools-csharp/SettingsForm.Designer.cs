@@ -1,6 +1,6 @@
 ﻿namespace netgametools_csharp
 {
-    partial class ConfigForm
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -51,6 +51,7 @@
             this.checkBoxIGDOnly.TabIndex = 12;
             this.checkBoxIGDOnly.Text = "List Internet Gateway Devices Only";
             this.checkBoxIGDOnly.UseVisualStyleBackColor = true;
+            this.checkBoxIGDOnly.CheckedChanged += new System.EventHandler(this.checkBoxIGDOnly_CheckedChanged);
             // 
             // comboAdapters
             // 
@@ -119,7 +120,7 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // ConfigForm
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,8 +129,9 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "ConfigForm";
-            this.Text = "ConfigForm";
+            this.Name = "SettingsForm";
+            this.Text = "SettingsForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
