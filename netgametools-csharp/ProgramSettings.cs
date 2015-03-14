@@ -25,6 +25,10 @@ namespace netgametools_csharp
 
         static public bool optionShowOnlyNetworkDevices = true;
 
+        static public bool optionSkipSafetyChecks = false;
+
+        static public bool optionFilterMappingsByLocalIP = true;
+
         static public ControlPoint cp;
 
         static public int selectedAdapter;
@@ -44,6 +48,11 @@ namespace netgametools_csharp
         static public Device SelectDeviceByUUID(string uuid)
         {
             return cp.FindDeviceByUUID(uuid);
+        }
+
+        static public IPAddress GetCurrentLocalIP()
+        {
+            return adapters[selectedAdapter].address;
         }
 
         static public void LoadNetworkInterfaces()

@@ -199,8 +199,8 @@ namespace chainedlupine.UPnP
 
         public int GetPortMappingNumberOfEntries()
         {
-            //if (_service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
-              //  throw new Exception("GetPortMappingNumberOfEntries not supported!");
+            if (_service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
+                throw new Exception("GetPortMappingNumberOfEntries not supported!");
 
             XElement woo = new XElement(_uNs + "GetPortMappingNumberOfEntries",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN)
@@ -219,6 +219,9 @@ namespace chainedlupine.UPnP
 
         public List<DeviceGatewayPortRecord> GetPortMappingEntries()
         {
+            if (_service.supportedActions.IndexOf("GetGenericPortMappingEntry") == -1)
+                throw new Exception("GetGenericPortMappingEntry not supported!");
+
             List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
 
             int portIndex = 0;
@@ -256,6 +259,25 @@ namespace chainedlupine.UPnP
 
             return mappings;
         }
+
+        public void DeletePortMapping(string remoteHost, ushort externalPort, string protocol)
+        {
+            if (_service.supportedActions.IndexOf("DeletePortMapping") == -1)
+                throw new Exception("DeletePortMapping not supported!");
+
+            string ip = "";
+
+            XElement woo = new XElement(_uNs + "DeletePortMapping",
+                    new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
+                    new XElement("NewRemoteHost", remoteHost),
+                    new XElement("NewExternalPort", externalPort.ToString()),
+                    new XElement("NewProtocol", protocol)
+                );
+
+            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+        }
+
 
     }
 }

@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using chainedlupine.UPnP;
+using System.Net.Sockets;
+using System.Net;
 
 namespace netgametools_csharp
 {
     public partial class DeviceGatewayConfigForm : Form
     {
         Device device;
+        List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
        
         public DeviceGatewayConfigForm()
         {
@@ -25,32 +28,117 @@ namespace netgametools_csharp
             device = selectedDevice ;
         }
 
+        private void LoadForwardsFromDevice()
+        {
+            mappings = DeviceGateway.GetPortMappingEntries(device);
+        }
+
+        private void LoadForwardsToList()
+        {
+            listViewDeviceMappings.Items.Clear();
+
+            if (DeviceGateway.isGateway(device))
+            {
+                grpIGDInfo.Visible = true;
+
+                foreach (DeviceGatewayPortRecord portRec in mappings)
+                {
+                    IPAddress currIP = IPAddress.Parse(portRec.InternalClient);
+                    IPAddress localIP = ProgramSettings.GetCurrentLocalIP();
+                    if (ProgramSettings.optionFilterMappingsByLocalIP && currIP.ToString() != localIP.ToString())
+                        continue;
+
+                    ListViewItem item = new ListViewItem(portRec.Desc);
+                    item.SubItems.Add(portRec.InternalClient);
+                    item.SubItems.Add(portRec.Protocol);
+                    item.SubItems.Add(portRec.InternalPort.ToString());
+                    item.SubItems.Add(portRec.ExternalPort.ToString());
+                    item.Tag = portRec.GetHashCode();
+                    listViewDeviceMappings.Items.Add(item);
+                }
+            }
+            else
+                grpIGDInfo.Visible = false;
+
+            btnRemoveForward.Enabled = false;
+        }
+
         private void DeviceGatewayConfigForm_Load(object sender, EventArgs e)
         {
             grpDevice.Enabled = true;
 
+            checkBoxFilter.Checked = ProgramSettings.optionFilterMappingsByLocalIP;
+
             if (device != null)
             {
-                listViewDeviceMappings.Items.Clear();
+
+                LoadForwardsFromDevice();
+                LoadForwardsToList();
+
+                textDeviceModel.Text = device.descModelName;
+                textDeviceName.Text = device.descFriendlyName;
 
                 if (DeviceGateway.isGateway(device))
                 {
-                    grpIGDInfo.Visible = true;
-                    List<DeviceGatewayPortRecord> mappings = DeviceGateway.GetPortMappingEntries(device);
+                    textDeviceExternalIP.Text = DeviceGateway.GetExternalIP(device);
+                }
+                else
+                    textDeviceExternalIP.Text = "None";
+
+            }
+
+            textDeviceName.Select(0, 0);
+        }
+
+        private void btnAddForward_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRemoveForward_Click(object sender, EventArgs e)
+        {
+            if (listViewDeviceMappings.SelectedIndices.Count > 0)
+            {
+                foreach (int index in listViewDeviceMappings.SelectedIndices)
+                {
+                    ListViewItem item = listViewDeviceMappings.Items[index];
 
                     foreach (DeviceGatewayPortRecord portRec in mappings)
                     {
-                        ListViewItem item = new ListViewItem(portRec.Desc);
-                        item.SubItems.Add(portRec.InternalClient);
-                        item.SubItems.Add(portRec.Protocol);
-                        item.SubItems.Add(portRec.InternalPort.ToString());
-                        item.SubItems.Add(portRec.ExternalPort.ToString());
-                        listViewDeviceMappings.Items.Add(item);
+                        if ((int)item.Tag == portRec.GetHashCode())
+                        {
+                            DeviceGateway.DeletePortMapping(device, portRec.RemoteHost, portRec.ExternalPort, portRec.Protocol);
+                        }
                     }
+
                 }
-                else
-                    grpIGDInfo.Visible = false;
             }
+
+            LoadForwardsFromDevice();
+            LoadForwardsToList();
+        }
+
+        private void listViewDeviceMappings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveForward.Enabled = listViewDeviceMappings.SelectedIndices.Count > 0;
+
+            if (listViewDeviceMappings.SelectedIndices.Count > 1)
+                btnRemoveForward.Text = "Remove Port Forwards";
+            else
+                btnRemoveForward.Text = "Remove Port Forward";
+        }
+
+        private void checkBoxFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            ProgramSettings.optionFilterMappingsByLocalIP = checkBoxFilter.Checked;
+
+            LoadForwardsToList();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadForwardsFromDevice();
+            LoadForwardsToList();
         }
     }
 }

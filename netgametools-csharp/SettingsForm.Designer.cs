@@ -36,6 +36,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.checkBoxSkipSafety = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -103,13 +104,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxSkipSafety);
             this.groupBox2.Controls.Add(this.checkBoxIGDOnly);
             this.groupBox2.Location = new System.Drawing.Point(12, 102);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(448, 110);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Display";
+            this.groupBox2.Text = "Options";
             // 
             // btnClose
             // 
@@ -120,6 +122,18 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // checkBoxSkipSafety
+            // 
+            this.checkBoxSkipSafety.AutoSize = true;
+            this.checkBoxSkipSafety.Checked = true;
+            this.checkBoxSkipSafety.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSkipSafety.Location = new System.Drawing.Point(6, 52);
+            this.checkBoxSkipSafety.Name = "checkBoxSkipSafety";
+            this.checkBoxSkipSafety.Size = new System.Drawing.Size(119, 17);
+            this.checkBoxSkipSafety.TabIndex = 13;
+            this.checkBoxSkipSafety.Text = "Skip Safety Checks";
+            this.checkBoxSkipSafety.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -152,6 +166,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.CheckBox checkBoxSkipSafety;
 
     }
 }

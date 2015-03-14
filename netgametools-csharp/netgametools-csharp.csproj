@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPortForwardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPortForwardForm.Designer.cs">
+      <DependentUpon>AddPortForwardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

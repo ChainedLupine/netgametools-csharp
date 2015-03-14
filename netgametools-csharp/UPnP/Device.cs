@@ -204,5 +204,21 @@ namespace chainedlupine.UPnP
             return mappings;
         }
 
+        static public void DeletePortMapping(Device device, string remoteHost, ushort externalPort, string protocol)
+        {
+            if (!isGateway(device))
+                throw new Exception("This device is not an internet gateway!");
+
+            Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            if (service == null)
+                throw new Exception("No WANIPConnection service on this device!");
+
+            IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
+
+            //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
+
+            wanService.DeletePortMapping(remoteHost, externalPort, protocol);
+        }
+
     }
 }

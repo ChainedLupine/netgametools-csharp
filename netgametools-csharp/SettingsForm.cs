@@ -31,12 +31,15 @@ namespace netgametools_csharp
         {
             ProgramSettings.optionShowOnlyNetworkDevices = checkBoxIGDOnly.Checked;
 
+            ProgramSettings.optionSkipSafetyChecks = checkBoxSkipSafety.Checked;
+
             ProgramSettings.selectedAdapter = comboAdapters.SelectedIndex;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             checkBoxIGDOnly.Checked = ProgramSettings.optionShowOnlyNetworkDevices;
+            checkBoxSkipSafety.Checked = ProgramSettings.optionSkipSafetyChecks;
 
             comboAdapters.Items.Clear();
 
