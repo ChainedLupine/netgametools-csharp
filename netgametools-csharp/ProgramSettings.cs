@@ -10,6 +10,10 @@ using chainedlupine.UPnP;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace netgametools_csharp
 {
@@ -19,15 +23,35 @@ namespace netgametools_csharp
         public IPAddress address ;
     }
 
+    [XmlType("Settings")]
+    public class Settings
+    {
+        [XmlAttribute("Version", DataType = "string")]
+        public string Version { get; set; }
+
+        [XmlElement("ShowOnlyNetworkDevices")]
+        public bool ShowOnlyNetworkDevices { get; set; }
+
+        [XmlElement("SkipSafetyChecks")]
+        public bool SkipSafetyChecks { get; set; }
+
+        [XmlElement("FilterMappingsByLocalIP")]
+        public bool FilterMappingsByLocalIP { get; set; }
+
+        public Settings()
+        {
+            Version = "1";
+            ShowOnlyNetworkDevices = true;
+            SkipSafetyChecks = false;
+            FilterMappingsByLocalIP = true;
+        }
+    }
+
     class ProgramSettings
     {
+        static public Settings settings = new Settings();
+
         static public List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
-
-        static public bool optionShowOnlyNetworkDevices = true;
-
-        static public bool optionSkipSafetyChecks = false;
-
-        static public bool optionFilterMappingsByLocalIP = true;
 
         static public ControlPoint cp;
 
@@ -37,6 +61,7 @@ namespace netgametools_csharp
         {
             cp = new ControlPoint();
             LoadNetworkInterfaces();
+
         }
 
         static public void CenterFormToParentClientArea(Form parent, Form child)
@@ -80,6 +105,68 @@ namespace netgametools_csharp
 
          //   if (comboAdapters.Items.Count > 0)
           //      comboAdapters.SelectedIndex = 0;
+
+        }
+
+        public static void SaveSettings()
+        {
+            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                Path.Combine("UPnPConfig", "settings.xml"));
+
+            Type[] extraSerializeTypes = { };
+            XmlSerializer serializer = new XmlSerializer(typeof(Settings), extraSerializeTypes);
+            FileStream fs = new FileStream(fileName, FileMode.Create);
+            serializer.Serialize(fs, settings);
+            fs.Close(); 
+
+            /*
+            XDocument doc = new XDocument(
+                new XElement("settings",
+                    new XAttribute ("version", 1),
+                    new XElement("optionShowOnlyNetworkDevices", optionShowOnlyNetworkDevices.ToString()),
+                    new XElement("optionSkipSafetyChecks", optionSkipSafetyChecks.ToString()),
+                    new XElement("optionFilterMappingsByLocalIP", optionFilterMappingsByLocalIP.ToString())
+                    )
+                );
+
+            (new FileInfo(fileName)).Directory.Create();
+
+            doc.Save(fileName) ; */
+
+
+        }
+
+        public static void LoadSettings()
+        {
+            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                Path.Combine ("UPnPConfig", "settings.xml"));
+
+            try
+            {
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                Type[] extraSerializeTypes = { };
+                XmlSerializer serializer = new XmlSerializer(typeof(Settings), extraSerializeTypes); 
+                settings = (Settings)serializer.Deserialize(fs);
+            } 
+            catch
+            {
+                settings = new Settings();
+            }
+
+            /*try
+            {
+                XDocument doc = XDocument.Load(fileName);
+
+                XElement Xsettings = doc.Element("settings");
+
+                optionShowOnlyNetworkDevices = Convert.ToBoolean(Xsettings.Element("optionShowOnlyNetworkDevices").Value);
+                optionSkipSafetyChecks = Convert.ToBoolean(Xsettings.Element("optionSkipSafetyChecks").Value);
+                optionFilterMappingsByLocalIP = Convert.ToBoolean(Xsettings.Element("optionFilterMappingsByLocalIP").Value);
+            }
+            catch
+            {
+                return;
+            }*/
 
         }
     }

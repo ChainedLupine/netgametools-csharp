@@ -14,9 +14,11 @@ namespace netgametools_csharp
         [STAThread]
         static void Main()
         {
+            ProgramSettings.LoadSettings();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UPnPConfigUI());
+            ProgramSettings.SaveSettings();
         }
     }
 }

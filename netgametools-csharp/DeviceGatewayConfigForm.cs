@@ -45,7 +45,7 @@ namespace netgametools_csharp
                 {
                     IPAddress currIP = IPAddress.Parse(portRec.InternalClient);
                     IPAddress localIP = ProgramSettings.GetCurrentLocalIP();
-                    if (ProgramSettings.optionFilterMappingsByLocalIP && currIP.ToString() != localIP.ToString())
+                    if (ProgramSettings.settings.FilterMappingsByLocalIP && currIP.ToString() != localIP.ToString())
                         continue;
 
                     ListViewItem item = new ListViewItem(portRec.Desc);
@@ -67,7 +67,7 @@ namespace netgametools_csharp
         {
             grpDevice.Enabled = true;
 
-            checkBoxFilter.Checked = ProgramSettings.optionFilterMappingsByLocalIP;
+            checkBoxFilter.Checked = ProgramSettings.settings.FilterMappingsByLocalIP;
 
             if (device != null)
             {
@@ -130,7 +130,7 @@ namespace netgametools_csharp
 
         private void checkBoxFilter_CheckedChanged(object sender, EventArgs e)
         {
-            ProgramSettings.optionFilterMappingsByLocalIP = checkBoxFilter.Checked;
+            ProgramSettings.settings.FilterMappingsByLocalIP = checkBoxFilter.Checked;
 
             LoadForwardsToList();
         }

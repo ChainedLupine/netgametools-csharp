@@ -40,7 +40,7 @@ namespace netgametools_csharp
 
             foreach (Device device in ProgramSettings.cp.knownDeviceList)
             {
-                if (ProgramSettings.optionShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
+                if (ProgramSettings.settings.ShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
                     continue;
 
                 ListViewItem item = new ListViewItem(device.descFriendlyName);
