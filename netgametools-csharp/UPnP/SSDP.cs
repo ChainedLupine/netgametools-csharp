@@ -99,7 +99,7 @@ namespace chainedlupine.UPnP
                 return  "" ;
         }
 
-        public List<Device> Discover(string deviceType, ushort port = SSDP_PORT)
+        public List<Device> Discover(string deviceType, ushort port = SSDP_PORT, bool safetyChecks = true)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
@@ -142,7 +142,7 @@ namespace chainedlupine.UPnP
                         device.discoveredKeys = new Dictionary<string, string>(response.values);
                         try
                         {
-                            device.retrieveDeviceProfile();
+                            device.retrieveDeviceProfile(safetyChecks);
                         }
                         catch (Exception e)
                         {

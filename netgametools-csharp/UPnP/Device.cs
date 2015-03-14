@@ -85,7 +85,7 @@ namespace chainedlupine.UPnP
             }
         }
 
-        public void retrieveDeviceProfile()
+        public void retrieveDeviceProfile(bool safetyChecks = true)
         {
             XDocument xDeviceProfile ;
 
@@ -123,7 +123,7 @@ namespace chainedlupine.UPnP
 
             IEnumerable<XElement> xServiceDescs = xDevice.Descendants(deviceNs + "service");
 
-            services = Service.LoadServices(deviceUri, deviceNs, xServiceDescs);
+            services = Service.LoadServices(deviceUri, deviceNs, xServiceDescs, safetyChecks);
         }
     }
 
@@ -218,6 +218,23 @@ namespace chainedlupine.UPnP
             //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
 
             wanService.DeletePortMapping(remoteHost, externalPort, protocol);
+        }
+
+        static public void AddPortMapping(Device device, string remoteHost, ushort externalPort, string protocol, ushort internalPort, string internalClient, string desc)
+        {
+            if (!isGateway(device))
+                throw new Exception("This device is not an internet gateway!");
+
+            Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
+            if (service == null)
+                throw new Exception("No WANIPConnection service on this device!");
+
+            IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
+
+            //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
+
+            wanService.AddPortMapping(remoteHost, externalPort, protocol, internalPort, internalClient, desc);
+
         }
 
     }

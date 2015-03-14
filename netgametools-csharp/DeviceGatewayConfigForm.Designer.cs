@@ -30,6 +30,10 @@
         {
             this.grpDevice = new System.Windows.Forms.GroupBox();
             this.grpIGDInfo = new System.Windows.Forms.GroupBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.checkBoxFilter = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnPortCollections = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnRemoveForward = new System.Windows.Forms.Button();
             this.textDeviceExternalIP = new System.Windows.Forms.TextBox();
@@ -44,10 +48,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textDeviceName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnPortCollections = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxFilter = new System.Windows.Forms.CheckBox();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.grpDevice.SuspendLayout();
             this.grpIGDInfo.SuspendLayout();
             this.SuspendLayout();
@@ -90,6 +90,51 @@
             this.grpIGDInfo.TabIndex = 12;
             this.grpIGDInfo.TabStop = false;
             this.grpIGDInfo.Text = "Internet Gateway Info";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Location = new System.Drawing.Point(10, 357);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(95, 23);
+            this.btnRefresh.TabIndex = 15;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // checkBoxFilter
+            // 
+            this.checkBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxFilter.AutoSize = true;
+            this.checkBoxFilter.Checked = true;
+            this.checkBoxFilter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxFilter.Location = new System.Drawing.Point(407, 44);
+            this.checkBoxFilter.Name = "checkBoxFilter";
+            this.checkBoxFilter.Size = new System.Drawing.Size(105, 17);
+            this.checkBoxFilter.TabIndex = 14;
+            this.checkBoxFilter.Text = "Filter By Local IP";
+            this.checkBoxFilter.UseVisualStyleBackColor = true;
+            this.checkBoxFilter.CheckedChanged += new System.EventHandler(this.checkBoxFilter_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Current Port Forwards:";
+            // 
+            // btnPortCollections
+            // 
+            this.btnPortCollections.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPortCollections.Enabled = false;
+            this.btnPortCollections.Location = new System.Drawing.Point(111, 357);
+            this.btnPortCollections.Name = "btnPortCollections";
+            this.btnPortCollections.Size = new System.Drawing.Size(127, 23);
+            this.btnPortCollections.TabIndex = 12;
+            this.btnPortCollections.Text = "Port Collections";
+            this.btnPortCollections.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -212,51 +257,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Name";
             // 
-            // btnPortCollections
-            // 
-            this.btnPortCollections.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPortCollections.Enabled = false;
-            this.btnPortCollections.Location = new System.Drawing.Point(111, 357);
-            this.btnPortCollections.Name = "btnPortCollections";
-            this.btnPortCollections.Size = new System.Drawing.Size(127, 23);
-            this.btnPortCollections.TabIndex = 12;
-            this.btnPortCollections.Text = "Port Collections";
-            this.btnPortCollections.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Current Port Forwards:";
-            // 
-            // checkBoxFilter
-            // 
-            this.checkBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxFilter.AutoSize = true;
-            this.checkBoxFilter.Checked = true;
-            this.checkBoxFilter.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxFilter.Location = new System.Drawing.Point(407, 44);
-            this.checkBoxFilter.Name = "checkBoxFilter";
-            this.checkBoxFilter.Size = new System.Drawing.Size(105, 17);
-            this.checkBoxFilter.TabIndex = 14;
-            this.checkBoxFilter.Text = "Filter By Local IP";
-            this.checkBoxFilter.UseVisualStyleBackColor = true;
-            this.checkBoxFilter.CheckedChanged += new System.EventHandler(this.checkBoxFilter_CheckedChanged);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.Location = new System.Drawing.Point(10, 357);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(95, 23);
-            this.btnRefresh.TabIndex = 15;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
             // DeviceGatewayConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,7 +265,7 @@
             this.Controls.Add(this.grpDevice);
             this.MinimumSize = new System.Drawing.Size(578, 529);
             this.Name = "DeviceGatewayConfigForm";
-            this.Text = "DeviceGatewayConfigForm";
+            this.Text = "Configure Gateway uPnP Device";
             this.Load += new System.EventHandler(this.DeviceGatewayConfigForm_Load);
             this.grpDevice.ResumeLayout(false);
             this.grpDevice.PerformLayout();

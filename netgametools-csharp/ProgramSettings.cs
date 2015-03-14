@@ -37,6 +37,10 @@ namespace netgametools_csharp
 
         [XmlElement("FilterMappingsByLocalIP")]
         public bool FilterMappingsByLocalIP { get; set; }
+        
+        [XmlElement("SelectedAdapterName")]
+        public string SelectedAdapterName;
+
 
         public Settings()
         {
@@ -44,6 +48,7 @@ namespace netgametools_csharp
             ShowOnlyNetworkDevices = true;
             SkipSafetyChecks = false;
             FilterMappingsByLocalIP = true;
+            SelectedAdapterName = "None";
         }
     }
 
@@ -55,7 +60,6 @@ namespace netgametools_csharp
 
         static public ControlPoint cp;
 
-        static public int selectedAdapter;
 
         static public void Init()
         {
@@ -77,7 +81,18 @@ namespace netgametools_csharp
 
         static public IPAddress GetCurrentLocalIP()
         {
-            return adapters[selectedAdapter].address;
+            return GetSelectedAdapterDetails(settings.SelectedAdapterName).address;
+        }
+
+        static public NetworkAdapterDetail GetSelectedAdapterDetails(string name)
+        {
+            foreach (NetworkAdapterDetail adapter in adapters)
+            {
+                if (adapter.name == name)
+                    return adapter;
+            }
+
+            return null;
         }
 
         static public void LoadNetworkInterfaces()
@@ -101,7 +116,10 @@ namespace netgametools_csharp
                 }
             }
 
-            selectedAdapter = 0;
+            if (GetSelectedAdapterDetails(settings.SelectedAdapterName) == null)
+            {
+                settings.SelectedAdapterName = adapters[0].name;
+            }
 
          //   if (comboAdapters.Items.Count > 0)
           //      comboAdapters.SelectedIndex = 0;
@@ -112,6 +130,8 @@ namespace netgametools_csharp
         {
             string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 Path.Combine("UPnPConfig", "settings.xml"));
+
+            (new FileInfo(fileName)).Directory.Create();
 
             Type[] extraSerializeTypes = { };
             XmlSerializer serializer = new XmlSerializer(typeof(Settings), extraSerializeTypes);

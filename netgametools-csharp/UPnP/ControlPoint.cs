@@ -21,9 +21,9 @@ namespace chainedlupine.UPnP
             Service.RegisterInterfaces();
         }
 
-        public bool FindAllDevices()
+        public bool FindAllDevices(bool safetyChecks = true)
         {
-            _uPnPDevices = _ssdpDiscoverer.Discover(SSDP.DEVICETYPE_ROOTDEVICE);
+            _uPnPDevices = _ssdpDiscoverer.Discover(SSDP.DEVICETYPE_ROOTDEVICE, safetyChecks: safetyChecks);
 
             return _uPnPDevices.Count > 0;
         }

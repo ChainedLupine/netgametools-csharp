@@ -85,7 +85,7 @@ namespace netgametools_csharp
                 busyForm.Update();
 
 
-                if (ProgramSettings.cp.FindAllDevices())
+                if (ProgramSettings.cp.FindAllDevices(!ProgramSettings.settings.SkipSafetyChecks))
                 {
                     WriteStatus(string.Format("Found {0} devices on network!", ProgramSettings.cp.knownDeviceList.Count));
                     BuildSelectedDeviceList();
@@ -138,6 +138,8 @@ namespace netgametools_csharp
             Device selectedDevice = ProgramSettings.SelectDeviceByUUID(uuid);
 
             DeviceGatewayConfigForm form = new DeviceGatewayConfigForm();
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = new Point(Location.X + 50, Location.Y + 50);
             form.Init(selectedDevice);
 
             //ProgramSettings.CenterFormToParentClientArea(this, form);

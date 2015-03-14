@@ -35,8 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnClose = new System.Windows.Forms.Button();
             this.checkBoxSkipSafety = new System.Windows.Forms.CheckBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -113,16 +113,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Options";
             // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(385, 218);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 15;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // checkBoxSkipSafety
             // 
             this.checkBoxSkipSafety.AutoSize = true;
@@ -135,6 +125,16 @@
             this.checkBoxSkipSafety.Text = "Skip Safety Checks";
             this.checkBoxSkipSafety.UseVisualStyleBackColor = true;
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(385, 218);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 15;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -145,7 +145,7 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SettingsForm";
-            this.Text = "SettingsForm";
+            this.Text = "uPnP Config Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.groupBox1.ResumeLayout(false);

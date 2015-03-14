@@ -14,6 +14,8 @@ namespace chainedlupine.UPnP
 {
     public class Service
     {
+        public bool safetyChecks = true;
+
         public string serviceType;
 
         public Uri serviceControlUri;
@@ -26,25 +28,30 @@ namespace chainedlupine.UPnP
 
         private static List<IService> _registeredServiceInterfaces ;
 
-        public Service(Uri deviceUri, XNamespace ns, XElement xServiceDesc)
+        public Service(Uri deviceUri, XNamespace ns, XElement xServiceDesc, bool safetyChecks)
         {
+            this.safetyChecks = safetyChecks;
 
             serviceType = xServiceDesc.Element(ns + "serviceType").Value;
             serviceControlUri = new Uri(deviceUri, xServiceDesc.Element(ns + "controlURL").Value);
             serviceDescUri = new Uri(deviceUri, xServiceDesc.Element(ns + "SCPDURL").Value);
 
-            // Load service description
-            XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
-
-            XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
-
-            foreach (XElement xAction in xDesc.Descendants(nsService + "action"))
+            if (safetyChecks)
             {
-                string actionName = xAction.Element(nsService + "name").Value;
-                supportedActions.Add(actionName);
-            }
+                // Load service description
+                XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
 
-            Debug.WriteLine(string.Format("Found {0} actions for service {1}", supportedActions.Count, serviceType));
+                XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
+
+                foreach (XElement xAction in xDesc.Descendants(nsService + "action"))
+                {
+                    string actionName = xAction.Element(nsService + "name").Value;
+                    supportedActions.Add(actionName);
+                }
+
+                Debug.WriteLine(string.Format("Found {0} actions for service {1}", supportedActions.Count, serviceType));
+            } else
+                Debug.WriteLine(string.Format("Adding unsafe service {0}.", serviceType));
 
         }
 
@@ -65,18 +72,18 @@ namespace chainedlupine.UPnP
             return null;
         }
 
-        public static List<Service> LoadServices(Uri deviceUri, XNamespace ns, IEnumerable<XElement> xServiceList)
+        public static List<Service> LoadServices(Uri deviceUri, XNamespace ns, IEnumerable<XElement> xServiceList, bool safetyChecks = true)
         {
             List<Service> services = new List<Service>();
 
             foreach (XElement xService in xServiceList)
             {
-                Service service = new Service(deviceUri, ns, xService);
+                Service service = new Service(deviceUri, ns, xService, safetyChecks);
                 services.Add(service);
 
                 foreach (IService iService in _registeredServiceInterfaces)
                 {
-                    Debug.WriteLine(iService.getServiceUrn());
+                    //Debug.WriteLine(iService.getServiceUrn());
                     if (service.serviceType == iService.getServiceUrn())
                     {
                         IService newServiceInterface = iService.newInstance();
@@ -104,7 +111,7 @@ namespace chainedlupine.UPnP
                     )
                 );
 
-            Debug.WriteLine(xReq.ToXmlDocument().AsString());
+            //Debug.WriteLine(xReq.ToXmlDocument().AsString());
 
             string serviceFuncName = request.Name.LocalName;
 
@@ -177,7 +184,7 @@ namespace chainedlupine.UPnP
 
         public string GetExternalIP()
         {
-            if (_service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
+            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
                 throw new Exception("GetExternalIPAddress not supported!");
 
             string ip = "";
@@ -187,7 +194,7 @@ namespace chainedlupine.UPnP
                 );
 
             XDocument xResp = _service.ExecSOAPRequest(woo);
-            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+            //Debug.WriteLine(xResp.ToXmlDocument().AsString());
 
             ip = (from el in xResp.Descendants()
                  where el.Name == "NewExternalIPAddress"
@@ -199,7 +206,7 @@ namespace chainedlupine.UPnP
 
         public int GetPortMappingNumberOfEntries()
         {
-            if (_service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
+            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
                 throw new Exception("GetPortMappingNumberOfEntries not supported!");
 
             XElement woo = new XElement(_uNs + "GetPortMappingNumberOfEntries",
@@ -207,7 +214,7 @@ namespace chainedlupine.UPnP
                 );
 
             XDocument xResp = _service.ExecSOAPRequest(woo);
-            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+            //Debug.WriteLine(xResp.ToXmlDocument().AsString());
 
             string result = (from el in xResp.Descendants()
                   where el.Name == "PortMappingNumberOfEntries"
@@ -219,7 +226,7 @@ namespace chainedlupine.UPnP
 
         public List<DeviceGatewayPortRecord> GetPortMappingEntries()
         {
-            if (_service.supportedActions.IndexOf("GetGenericPortMappingEntry") == -1)
+            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetGenericPortMappingEntry") == -1)
                 throw new Exception("GetGenericPortMappingEntry not supported!");
 
             List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
@@ -262,7 +269,7 @@ namespace chainedlupine.UPnP
 
         public void DeletePortMapping(string remoteHost, ushort externalPort, string protocol)
         {
-            if (_service.supportedActions.IndexOf("DeletePortMapping") == -1)
+            if (_service.safetyChecks && _service.supportedActions.IndexOf("DeletePortMapping") == -1)
                 throw new Exception("DeletePortMapping not supported!");
 
             string ip = "";
@@ -275,9 +282,31 @@ namespace chainedlupine.UPnP
                 );
 
             XDocument xResp = _service.ExecSOAPRequest(woo);
-            Debug.WriteLine(xResp.ToXmlDocument().AsString());
+            //Debug.WriteLine(xResp.ToXmlDocument().AsString());
         }
 
+        public void AddPortMapping(string remoteHost, ushort externalPort, string protocol, ushort internalPort, string internalClient, string desc)
+        {
+            if (_service.safetyChecks && _service.supportedActions.IndexOf("AddPortMapping") == -1)
+                throw new Exception("AddPortMapping not supported!");
+
+            string ip = "";
+
+            XElement woo = new XElement(_uNs + "AddPortMapping",
+                    new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
+                    new XElement("NewRemoteHost", remoteHost),
+                    new XElement("NewExternalPort", externalPort.ToString()),
+                    new XElement("NewProtocol", protocol),
+                    new XElement("NewInternalPort", internalPort.ToString()),
+                    new XElement("NewInternalClient", internalClient),
+                    new XElement("NewEnabled", "True"),
+                    new XElement("NewPortMappingDescription", desc),
+                    new XElement("NewLeaseDuration", 0)
+                );
+
+            XDocument xResp = _service.ExecSOAPRequest(woo);
+            //Debug.WriteLine(xResp.ToXmlDocument().AsString());
+        }
 
     }
 }

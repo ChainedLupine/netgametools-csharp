@@ -92,7 +92,15 @@ namespace netgametools_csharp
 
         private void btnAddForward_Click(object sender, EventArgs e)
         {
+            AddPortForwardForm form = new AddPortForwardForm();
+            form.Init(device);
 
+            form.Location = new Point(Location.X + 50, Location.Y + 50);
+
+            form.ShowDialog();
+
+            LoadForwardsFromDevice();
+            LoadForwardsToList();
         }
 
         private void btnRemoveForward_Click(object sender, EventArgs e)

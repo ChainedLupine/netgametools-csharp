@@ -33,7 +33,7 @@ namespace netgametools_csharp
 
             ProgramSettings.settings.SkipSafetyChecks = checkBoxSkipSafety.Checked;
 
-            ProgramSettings.selectedAdapter = comboAdapters.SelectedIndex;
+            ProgramSettings.settings.SelectedAdapterName = comboAdapters.SelectedItem.ToString();
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -48,14 +48,14 @@ namespace netgametools_csharp
                 comboAdapters.Items.Add(adapterDetail.name);
             }
 
-            comboAdapters.SelectedIndex = ProgramSettings.selectedAdapter;
+            comboAdapters.SelectedIndex = comboAdapters.FindStringExact(ProgramSettings.settings.SelectedAdapterName);
 
             textCurrentIP.Select(0, 0);
         }
 
         private void comboAdapters_SelectedIndexChanged(object sender, EventArgs e)
         {
-            textCurrentIP.Text = ProgramSettings.adapters[ProgramSettings.selectedAdapter].address.ToString();
+            textCurrentIP.Text = ProgramSettings.GetSelectedAdapterDetails(comboAdapters.SelectedItem.ToString()).address.ToString();
         }
     }
 }

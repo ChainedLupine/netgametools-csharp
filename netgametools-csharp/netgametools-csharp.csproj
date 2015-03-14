@@ -87,6 +87,9 @@
     <Compile Include="UPnP\Device.cs" />
     <Compile Include="UPnP\Service.cs" />
     <Compile Include="UPnP\SSDP.cs" />
+    <EmbeddedResource Include="AddPortForwardForm.resx">
+      <DependentUpon>AddPortForwardForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
