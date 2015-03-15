@@ -71,6 +71,8 @@ namespace chainedlupine.UPnP
         public string descModelDesc;
         public string descSerialNumber;
 
+        public IPAddress cachedExternalIP;
+
         public DeviceTypeEnum deviceType;
 
         public List<Service> services = new List<Service>();
@@ -152,6 +154,9 @@ namespace chainedlupine.UPnP
             if (!isGateway(device))
                 throw new Exception("This device is not an internet gateway!");
 
+            if (device.cachedExternalIP != null)
+                return device.cachedExternalIP.ToString();
+
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
                 throw new Exception("No WANIPConnection service on this device!");
@@ -160,7 +165,9 @@ namespace chainedlupine.UPnP
 
             //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
 
-            return wanService.GetExternalIP() ;
+            device.cachedExternalIP = IPAddress.Parse (wanService.GetExternalIP()) ;
+
+            return device.cachedExternalIP.ToString();
         }
 
         static public int GetPortMappingNumberOfEntries(Device device)

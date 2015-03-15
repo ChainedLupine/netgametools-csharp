@@ -105,6 +105,9 @@ namespace netgametools_csharp
 
         private void btnRemoveForward_Click(object sender, EventArgs e)
         {
+            List<DeviceGatewayPortRecord> toDelete = new List<DeviceGatewayPortRecord>();
+            string portStr = "";
+
             if (listViewDeviceMappings.SelectedIndices.Count > 0)
             {
                 foreach (int index in listViewDeviceMappings.SelectedIndices)
@@ -115,11 +118,23 @@ namespace netgametools_csharp
                     {
                         if ((int)item.Tag == portRec.GetHashCode())
                         {
-                            DeviceGateway.DeletePortMapping(device, portRec.RemoteHost, portRec.ExternalPort, portRec.Protocol);
+                            toDelete.Add(portRec);
+                            portStr += string.Format("Internal {0}:{1} to External {2}:{3}, {4}\n", portRec.InternalClient,
+                                portRec.InternalPort, DeviceGateway.GetExternalIP(device), portRec.ExternalPort, portRec.Protocol);
                         }
                     }
 
                 }
+            }
+
+            if (MessageBox.Show ("Are you sure you want to remove these mappings?\n\n" + portStr, "Delete Port Mappings", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != System.Windows.Forms.DialogResult.Yes)
+            {
+                return;
+            }
+
+            foreach (DeviceGatewayPortRecord portRec in toDelete)
+            {
+                DeviceGateway.DeletePortMapping(device, portRec.RemoteHost, portRec.ExternalPort, portRec.Protocol);
             }
 
             LoadForwardsFromDevice();
