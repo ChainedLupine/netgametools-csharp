@@ -38,19 +38,22 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.grpDeviceList = new System.Windows.Forms.GroupBox();
             this.btnConfig = new System.Windows.Forms.Button();
-            this.textStatus = new System.Windows.Forms.TextBox();
             this.menuStripTop = new System.Windows.Forms.MenuStrip();
             this.fireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpDeviceList.SuspendLayout();
             this.menuStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewDevices
             // 
-            this.listViewDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.listViewDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -63,7 +66,7 @@
             this.listViewDevices.Location = new System.Drawing.Point(6, 19);
             this.listViewDevices.MultiSelect = false;
             this.listViewDevices.Name = "listViewDevices";
-            this.listViewDevices.Size = new System.Drawing.Size(708, 165);
+            this.listViewDevices.Size = new System.Drawing.Size(711, 158);
             this.listViewDevices.TabIndex = 0;
             this.listViewDevices.UseCompatibleStateImageBehavior = false;
             this.listViewDevices.View = System.Windows.Forms.View.Details;
@@ -97,7 +100,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Location = new System.Drawing.Point(720, 19);
+            this.btnSearch.Location = new System.Drawing.Point(723, 19);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(120, 23);
             this.btnSearch.TabIndex = 1;
@@ -107,14 +110,15 @@
             // 
             // grpDeviceList
             // 
-            this.grpDeviceList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpDeviceList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpDeviceList.Controls.Add(this.btnConfig);
             this.grpDeviceList.Controls.Add(this.listViewDevices);
             this.grpDeviceList.Controls.Add(this.btnSearch);
             this.grpDeviceList.Location = new System.Drawing.Point(12, 30);
             this.grpDeviceList.Name = "grpDeviceList";
-            this.grpDeviceList.Size = new System.Drawing.Size(846, 190);
+            this.grpDeviceList.Size = new System.Drawing.Size(849, 183);
             this.grpDeviceList.TabIndex = 2;
             this.grpDeviceList.TabStop = false;
             this.grpDeviceList.Text = "Devices";
@@ -123,23 +127,13 @@
             // 
             this.btnConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfig.Enabled = false;
-            this.btnConfig.Location = new System.Drawing.Point(720, 48);
+            this.btnConfig.Location = new System.Drawing.Point(723, 48);
             this.btnConfig.Name = "btnConfig";
             this.btnConfig.Size = new System.Drawing.Size(120, 23);
             this.btnConfig.TabIndex = 2;
             this.btnConfig.Text = "Config Device";
             this.btnConfig.UseVisualStyleBackColor = true;
             this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
-            // 
-            // textStatus
-            // 
-            this.textStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textStatus.Location = new System.Drawing.Point(12, 239);
-            this.textStatus.Name = "textStatus";
-            this.textStatus.ReadOnly = true;
-            this.textStatus.Size = new System.Drawing.Size(846, 20);
-            this.textStatus.TabIndex = 7;
             // 
             // menuStripTop
             // 
@@ -148,14 +142,15 @@
             this.menuStripTop.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStripTop.Location = new System.Drawing.Point(0, 0);
             this.menuStripTop.Name = "menuStripTop";
-            this.menuStripTop.Size = new System.Drawing.Size(870, 24);
+            this.menuStripTop.Size = new System.Drawing.Size(873, 24);
             this.menuStripTop.TabIndex = 8;
             this.menuStripTop.Text = "menuStrip1";
             // 
             // fireToolStripMenuItem
             // 
             this.fireToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.consoleToolStripMenuItem});
             this.fireToolStripMenuItem.Name = "fireToolStripMenuItem";
             this.fireToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fireToolStripMenuItem.Text = "File";
@@ -179,16 +174,48 @@
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Location = new System.Drawing.Point(0, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(870, 2);
+            this.label1.Size = new System.Drawing.Size(873, 2);
             this.label1.TabIndex = 10;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelStatus.Location = new System.Drawing.Point(138, 216);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(723, 24);
+            this.labelStatus.TabIndex = 11;
+            this.labelStatus.Text = "Ready!";
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.progressBar.Location = new System.Drawing.Point(12, 216);
+            this.progressBar.MarqueeAnimationSpeed = 15;
+            this.progressBar.Maximum = 50;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(120, 24);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 12;
+            // 
+            // consoleToolStripMenuItem
+            // 
+            this.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
+            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.consoleToolStripMenuItem.Text = "Console";
+            this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
             // 
             // UPnPConfigUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 262);
+            this.ClientSize = new System.Drawing.Size(873, 249);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textStatus);
             this.Controls.Add(this.grpDeviceList);
             this.Controls.Add(this.menuStripTop);
             this.Name = "UPnPConfigUI";
@@ -211,7 +238,6 @@
         private System.Windows.Forms.GroupBox grpDeviceList;
         private System.Windows.Forms.Button btnConfig;
         private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.TextBox textStatus;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.MenuStrip menuStripTop;
@@ -219,6 +245,9 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
     }
 }
 

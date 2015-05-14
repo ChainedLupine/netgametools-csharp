@@ -18,6 +18,7 @@ namespace netgametools_csharp
 
     public partial class UPnPConfigUI : Form
     {
+        private BackgroundWorker _bgWorker;
 
         public UPnPConfigUI()
         {
@@ -33,13 +34,20 @@ namespace netgametools_csharp
 
         private void BuildSelectedDeviceList()
         {
+            if (_bgWorker != null)
+                return;
+            
             listViewDevices.Items.Clear();
+            //ProgramSettings.debugConsoleForm.ClearDevices();
 
-            if (ProgramSettings.cp.knownDeviceList == null)
+            if (ProgramSettings.controlPoint.knownDeviceList == null)
                 return;
 
-            foreach (Device device in ProgramSettings.cp.knownDeviceList)
+            foreach (Device device in ProgramSettings.controlPoint.knownDeviceList)
             {
+                //ProgramSettings.debugConsoleForm.LoadDeviceXml(device);
+
+
                 if (ProgramSettings.settings.ShowOnlyNetworkDevices && !DeviceGateway.isGateway(device))
                     continue;
 
@@ -62,53 +70,61 @@ namespace netgametools_csharp
             }
         }
 
+        private void bgWorkerLoaduPnPDevices(object sender, DoWorkEventArgs args)
+        {
+            ProgramSettings.controlPoint.FindAllDevices(!ProgramSettings.settings.SkipSafetyChecks);
+        }
+
+        private void bgWorkerLoadCompleted(object sender, RunWorkerCompletedEventArgs args)
+        {
+            _bgWorker = null;
+            btnSearch.Enabled = true;
+            BuildSelectedDeviceList();
+            progressBar.Style = ProgressBarStyle.Continuous;
+            WriteStatus(string.Format("Found {0} uPnP devices on network!", ProgramSettings.controlPoint.knownDeviceList.Count));
+            btnSearch.Text = "Search";
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            WriteStatus("Searching!", Color.Blue);
-            using (SearchBusyForm busyForm = new SearchBusyForm())
+            if (_bgWorker != null)
             {
-                Form darker;
-
-                darker = new Form();
-                darker.ControlBox = darker.MinimizeBox = false;
-                darker.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                darker.Text = "";
-                darker.BackColor = Color.Black;
-                darker.Opacity = 0.7f;
-                darker.Show();
-                darker.Size = ClientSize;
-                darker.Location = PointToScreen(Point.Empty);
-
-                busyForm.StartPosition = FormStartPosition.Manual;
-                busyForm.Location = new Point(this.Location.X + (this.Width - busyForm.Width) / 2, this.Location.Y + (this.Height - busyForm.Height) / 2);
-                busyForm.Show();
-                busyForm.Update();
-
-
-                if (ProgramSettings.cp.FindAllDevices(!ProgramSettings.settings.SkipSafetyChecks))
-                {
-                    WriteStatus(string.Format("Found {0} devices on network!", ProgramSettings.cp.knownDeviceList.Count));
-                    BuildSelectedDeviceList();
-
-                }
-                else
-                {
-                    WriteStatus("Unable to find any uPnP-enabled devices!", Color.Red);
-                }
-
-                busyForm.Close();
-                darker.Close();
+                _bgWorker.CancelAsync();
+                _bgWorker.Dispose();
+                _bgWorker = null;
+                GC.Collect();
+                btnSearch.Text = "Search";
+                WriteStatus("Search cancelled!", Color.Red);
+                progressBar.Style = ProgressBarStyle.Continuous;
+                return;
             }
+
+            btnSearch.Text = "Cancel";
+
+            WriteStatus("Searching!", Color.Blue);
+
+            //btnSearch.Enabled = false;
+            //listViewDevices.Items.Clear();
+
+            progressBar.Style = ProgressBarStyle.Marquee;
+
+            // Create loading thread
+            _bgWorker = new BackgroundWorker();
+            _bgWorker.WorkerSupportsCancellation = true;
+            _bgWorker.DoWork += new DoWorkEventHandler(bgWorkerLoaduPnPDevices);
+            _bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgWorkerLoadCompleted);
+            _bgWorker.RunWorkerAsync();
+
         }
 
         private void WriteStatus (string text, Color? c = null)
         {
-            textStatus.Text = text;
-            textStatus.ForeColor = c ?? Color.Black;
-            textStatus.Invalidate();
-            textStatus.Update();
-            textStatus.Refresh();
-            Application.DoEvents();
+            labelStatus.Text = text;
+            labelStatus.ForeColor = c ?? Color.Black;
+            //textStatus.Invalidate();
+            //textStatus.Update();
+            //textStatus.Refresh();
+            //Application.DoEvents();
         }
 
         private void checkBoxIGDOnly_CheckedChanged(object sender, EventArgs e)
@@ -144,6 +160,11 @@ namespace netgametools_csharp
 
             //ProgramSettings.CenterFormToParentClientArea(this, form);
             form.ShowDialog(); 
+        }
+
+        private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProgramSettings.debugConsoleForm.Show();
         }
 
 

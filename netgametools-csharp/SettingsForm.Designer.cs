@@ -37,6 +37,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.checkBoxSkipSafety = new System.Windows.Forms.CheckBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.checkBoxAlwaysShowDebug = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -104,6 +105,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxAlwaysShowDebug);
             this.groupBox2.Controls.Add(this.checkBoxSkipSafety);
             this.groupBox2.Controls.Add(this.checkBoxIGDOnly);
             this.groupBox2.Location = new System.Drawing.Point(12, 102);
@@ -134,6 +136,18 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // checkBoxAlwaysShowDebug
+            // 
+            this.checkBoxAlwaysShowDebug.AutoSize = true;
+            this.checkBoxAlwaysShowDebug.Checked = true;
+            this.checkBoxAlwaysShowDebug.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAlwaysShowDebug.Location = new System.Drawing.Point(6, 75);
+            this.checkBoxAlwaysShowDebug.Name = "checkBoxAlwaysShowDebug";
+            this.checkBoxAlwaysShowDebug.Size = new System.Drawing.Size(165, 17);
+            this.checkBoxAlwaysShowDebug.TabIndex = 14;
+            this.checkBoxAlwaysShowDebug.Text = "Always Show Debug Console";
+            this.checkBoxAlwaysShowDebug.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -167,6 +181,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.CheckBox checkBoxSkipSafety;
+        private System.Windows.Forms.CheckBox checkBoxAlwaysShowDebug;
 
     }
 }

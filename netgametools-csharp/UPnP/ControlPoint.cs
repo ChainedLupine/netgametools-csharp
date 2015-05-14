@@ -23,7 +23,11 @@ namespace chainedlupine.UPnP
 
         public bool FindAllDevices(bool safetyChecks = true)
         {
+            Logger.WriteLine("FindAllDevices is looking, safetyChecks=" + (safetyChecks ? "T" : "F"));
+
             _uPnPDevices = _ssdpDiscoverer.Discover(SSDP.DEVICETYPE_ROOTDEVICE, safetyChecks: safetyChecks);
+
+            Logger.WriteLine(string.Format("FindAllDevices found {0} devices.", _uPnPDevices.Count));
 
             return _uPnPDevices.Count > 0;
         }

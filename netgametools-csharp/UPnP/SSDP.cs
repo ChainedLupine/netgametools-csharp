@@ -120,8 +120,11 @@ namespace chainedlupine.UPnP
 
             DeviceList devices = new DeviceList();
 
+            List<string> foundUrls = new List<string>();
+
             do
             {
+                Logger.WriteLine("Sending M-SEARCH UDP packet...");
                 s.SendTo(data, endpoint);
 
                 int length = 0;
@@ -131,30 +134,46 @@ namespace chainedlupine.UPnP
 
                     string resp = Encoding.ASCII.GetString(buffer, 0, length);
 
+                    Logger.WriteLine(string.Format("Received data, length of {0}.", length));
+
                     httpresponse response = new httpresponse();
                     if (response.decode(resp) && response.status == 200)
                     {
-                        // We've got a valid status
-                        Device device = new Device();
-                        device.deviceUri = new Uri(response.values["location"]);
-                        // Do more indepth decoding
-                        Debug.WriteLine(string.Format("Detected URI={0}", device.deviceUri));
-                        device.discoveredKeys = new Dictionary<string, string>(response.values);
-                        try
-                        {
-                            device.retrieveDeviceProfile(safetyChecks);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine(string.Format("Unable to retrieve profile: {0}", e.Message));
-                        }
+                        Logger.WriteLine("Data decodes to valid HTTP respond!");
 
-                        if (device.uuid != null && !devices.isPresent(device))
+                        string url = response.values["location"] ;
+                        if (foundUrls.IndexOf(url) >= 0)
                         {
-                            devices.Add(device);
+                            Logger.WriteLineWarn("Already found URL of " + url + ", skipping.");
                         }
                         else
-                            Debug.WriteLine("Not adding device, already present or null UUID.");
+                        {
+                            foundUrls.Add(url);
+
+                            // We've got a valid status
+                            Device device = new Device();
+                            device.deviceUri = new Uri(url);
+
+                            Logger.WriteLine("Location URL for http response is " + device.deviceUri.ToString());
+
+                            // Do more indepth decoding
+                            device.discoveredKeys = new Dictionary<string, string>(response.values);
+                            try
+                            {
+                                device.retrieveDeviceProfile(safetyChecks);
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.WriteLineError(string.Format("Unable to retrieve profile: {0}", e.Message));
+                            }
+
+                            if (device.uuid != null && !devices.isPresent(device))
+                            {
+                                devices.Add(device);
+                            }
+                            else
+                                Logger.WriteLineWarn("Not adding device, already present or null UUID.");
+                        }
                     }
                 }
 

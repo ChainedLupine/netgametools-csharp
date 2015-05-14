@@ -33,6 +33,8 @@ namespace netgametools_csharp
 
             ProgramSettings.settings.SkipSafetyChecks = checkBoxSkipSafety.Checked;
 
+            ProgramSettings.settings.AlwaysShowDebugConsole = checkBoxAlwaysShowDebug.Checked;
+
             ProgramSettings.settings.SelectedAdapterName = comboAdapters.SelectedItem.ToString();
         }
 
@@ -40,6 +42,7 @@ namespace netgametools_csharp
         {
             checkBoxIGDOnly.Checked = ProgramSettings.settings.ShowOnlyNetworkDevices;
             checkBoxSkipSafety.Checked = ProgramSettings.settings.SkipSafetyChecks;
+            checkBoxAlwaysShowDebug.Checked = ProgramSettings.settings.AlwaysShowDebugConsole;
 
             comboAdapters.Items.Clear();
 

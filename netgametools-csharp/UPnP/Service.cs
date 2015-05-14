@@ -24,6 +24,8 @@ namespace chainedlupine.UPnP
 
         public IService serviceInterface ;
 
+        public XDocument debugRawXml;
+
         protected const string SOAP_NAMESPACE_URI = "http://schemas.xmlsoap.org/soap/envelope/" ;
 
         private static List<IService> _registeredServiceInterfaces ;
@@ -36,7 +38,22 @@ namespace chainedlupine.UPnP
             serviceControlUri = new Uri(deviceUri, xServiceDesc.Element(ns + "controlURL").Value);
             serviceDescUri = new Uri(deviceUri, xServiceDesc.Element(ns + "SCPDURL").Value);
 
-            if (safetyChecks)
+            Logger.WriteLine(string.Format("Creating service of type {0}, controlURL={1}, SCPDURL={2}", serviceType, serviceControlUri, serviceDescUri));
+
+            // Load service description
+            XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
+
+            XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
+            debugRawXml = xDesc;
+
+            foreach (XElement xAction in xDesc.Descendants(nsService + "action"))
+            {
+                string actionName = xAction.Element(nsService + "name").Value;
+                supportedActions.Add(actionName);
+            }
+
+
+            /*if (safetyChecks)
             {
                 // Load service description
                 XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
@@ -52,7 +69,7 @@ namespace chainedlupine.UPnP
                 Debug.WriteLine(string.Format("Found {0} actions for service {1}", supportedActions.Count, serviceType));
             } else
                 Debug.WriteLine(string.Format("Adding unsafe service {0}.", serviceType));
-
+            */
         }
 
         public static void RegisterInterfaces()
@@ -272,8 +289,6 @@ namespace chainedlupine.UPnP
             if (_service.safetyChecks && _service.supportedActions.IndexOf("DeletePortMapping") == -1)
                 throw new Exception("DeletePortMapping not supported!");
 
-            string ip = "";
-
             XElement woo = new XElement(_uNs + "DeletePortMapping",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
                     new XElement("NewRemoteHost", remoteHost),
@@ -289,8 +304,6 @@ namespace chainedlupine.UPnP
         {
             if (_service.safetyChecks && _service.supportedActions.IndexOf("AddPortMapping") == -1)
                 throw new Exception("AddPortMapping not supported!");
-
-            string ip = "";
 
             XElement woo = new XElement(_uNs + "AddPortMapping",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),

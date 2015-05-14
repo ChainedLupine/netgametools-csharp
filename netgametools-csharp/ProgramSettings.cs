@@ -37,7 +37,10 @@ namespace netgametools_csharp
 
         [XmlElement("FilterMappingsByLocalIP")]
         public bool FilterMappingsByLocalIP { get; set; }
-        
+
+        [XmlElement("AlwaysShowDebugConsole")]
+        public bool AlwaysShowDebugConsole { get; set; }
+
         [XmlElement("SelectedAdapterName")]
         public string SelectedAdapterName;
 
@@ -48,6 +51,7 @@ namespace netgametools_csharp
             ShowOnlyNetworkDevices = true;
             SkipSafetyChecks = false;
             FilterMappingsByLocalIP = true;
+            AlwaysShowDebugConsole = false;
             SelectedAdapterName = "None";
         }
     }
@@ -58,14 +62,22 @@ namespace netgametools_csharp
 
         static public List<NetworkAdapterDetail> adapters = new List<NetworkAdapterDetail>() ;
 
-        static public ControlPoint cp;
+        static public ControlPoint controlPoint;
 
+        static public DebugConsoleForm debugConsoleForm;
 
         static public void Init()
         {
-            cp = new ControlPoint();
+            controlPoint = new ControlPoint();
             LoadNetworkInterfaces();
 
+            debugConsoleForm = new DebugConsoleForm();
+
+            // Link loggers to debug form
+            debugConsoleForm.LinkLogger();
+
+            if (settings.AlwaysShowDebugConsole)
+                debugConsoleForm.Show();
         }
 
         static public void CenterFormToParentClientArea(Form parent, Form child)
@@ -76,7 +88,7 @@ namespace netgametools_csharp
 
         static public Device SelectDeviceByUUID(string uuid)
         {
-            return cp.FindDeviceByUUID(uuid);
+            return controlPoint.FindDeviceByUUID(uuid);
         }
 
         static public IPAddress GetCurrentLocalIP()

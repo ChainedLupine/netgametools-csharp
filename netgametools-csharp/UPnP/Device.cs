@@ -77,6 +77,8 @@ namespace chainedlupine.UPnP
 
         public List<Service> services = new List<Service>();
 
+        public XDocument debugRawXml;
+
         private void setDeviceType (string desc)
         {
             deviceType = DeviceTypeEnum.Unknown;
@@ -91,14 +93,19 @@ namespace chainedlupine.UPnP
         {
             XDocument xDeviceProfile ;
 
+            Logger.WriteLine("Retriving device profile from " + deviceUri.ToString());
             try
             {
-                 xDeviceProfile = XDocument.Load(WebRequest.Create(deviceUri.ToString()).GetResponse().GetResponseStream());
+                WebRequest req = WebRequest.Create(deviceUri.ToString()) ; 
+                req.Timeout = 1000 * 2 ;
+                xDeviceProfile = XDocument.Load(req.GetResponse().GetResponseStream());
             }
             catch
             {
                 throw new Exception("Unable to load device description XML from " + deviceUri.ToString());
             }
+
+            debugRawXml = xDeviceProfile;
 
             XNamespace deviceNs = "urn:schemas-upnp-org:device-1-0";
 
@@ -181,7 +188,7 @@ namespace chainedlupine.UPnP
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
-            //Debug.WriteLine (string.Format ("External IP = {0}", wanService.getExternalIP()));
+            //Logger.WriteLine (string.Format ("External IP = {0}", wanService.GetExternalIP()));
 
             return wanService.GetPortMappingNumberOfEntries();
         }
@@ -205,7 +212,7 @@ namespace chainedlupine.UPnP
             }
             catch (Exception e)
             {
-                Debug.WriteLine(string.Format("Failure to map ports: {0}", e.Message));
+                Logger.WriteLine(string.Format("Failure to map ports: {0}", e.Message));
             }
 
             return mappings;
