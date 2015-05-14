@@ -53,6 +53,16 @@ namespace netgametools_csharp
             TreeNode tNode = treeViewXml.Nodes.Add("Device " + device.uuid);
 
             ConvertXmlNodeToTreeNode(device.debugRawXml.ToXmlDocument(), tNode.Nodes);
+
+            // Add services
+            TreeNode servicesNode = tNode.Nodes.Add("Services");
+
+            foreach (Service service in device.services)
+            {
+                TreeNode serviceNode = servicesNode.Nodes.Add("Service Type " + service.serviceType);
+                ConvertXmlNodeToTreeNode(service.debugRawXml.ToXmlDocument(), serviceNode.Nodes);
+                
+            }
             //treeViewXml.Nodes[0].ExpandAll();
         }
 
@@ -139,11 +149,17 @@ namespace netgametools_csharp
 
         private void btnExpand_Click(object sender, EventArgs e)
         {
+            if (treeViewXml.SelectedNode == null)
+                return;
+
             treeViewXml.SelectedNode.ExpandAll();
         }
 
         private void btnCollapse_Click(object sender, EventArgs e)
         {
+            if (treeViewXml.SelectedNode == null)
+                return;
+
             treeViewXml.SelectedNode.Collapse();
         }
 

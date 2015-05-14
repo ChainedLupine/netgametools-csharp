@@ -31,9 +31,9 @@
             this.richTextBoxConsole = new System.Windows.Forms.RichTextBox();
             this.treeViewXml = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnDumpXml = new System.Windows.Forms.Button();
-            this.btnExpand = new System.Windows.Forms.Button();
             this.btnCollapse = new System.Windows.Forms.Button();
+            this.btnExpand = new System.Windows.Forms.Button();
+            this.btnDumpDeviceXml = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -50,7 +50,7 @@
             this.richTextBoxConsole.Location = new System.Drawing.Point(3, 3);
             this.richTextBoxConsole.Name = "richTextBoxConsole";
             this.richTextBoxConsole.ReadOnly = true;
-            this.richTextBoxConsole.Size = new System.Drawing.Size(428, 301);
+            this.richTextBoxConsole.Size = new System.Drawing.Size(394, 301);
             this.richTextBoxConsole.TabIndex = 0;
             this.richTextBoxConsole.Text = "";
             // 
@@ -61,7 +61,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewXml.Location = new System.Drawing.Point(3, 33);
             this.treeViewXml.Name = "treeViewXml";
-            this.treeViewXml.Size = new System.Drawing.Size(214, 271);
+            this.treeViewXml.Size = new System.Drawing.Size(248, 271);
             this.treeViewXml.TabIndex = 1;
             this.treeViewXml.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewXml_AfterSelect);
             // 
@@ -81,26 +81,27 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.btnCollapse);
             this.splitContainer1.Panel2.Controls.Add(this.btnExpand);
-            this.splitContainer1.Panel2.Controls.Add(this.btnDumpXml);
+            this.splitContainer1.Panel2.Controls.Add(this.btnDumpDeviceXml);
             this.splitContainer1.Panel2.Controls.Add(this.treeViewXml);
             this.splitContainer1.Size = new System.Drawing.Size(658, 307);
-            this.splitContainer1.SplitterDistance = 434;
+            this.splitContainer1.SplitterDistance = 400;
             this.splitContainer1.TabIndex = 2;
             // 
-            // btnDumpXml
+            // btnCollapse
             // 
-            this.btnDumpXml.Location = new System.Drawing.Point(4, 4);
-            this.btnDumpXml.Name = "btnDumpXml";
-            this.btnDumpXml.Size = new System.Drawing.Size(120, 23);
-            this.btnDumpXml.TabIndex = 2;
-            this.btnDumpXml.Text = "Dump Raw XML";
-            this.btnDumpXml.UseVisualStyleBackColor = true;
-            this.btnDumpXml.Click += new System.EventHandler(this.btnDumpXml_Click);
+            this.btnCollapse.Enabled = false;
+            this.btnCollapse.Location = new System.Drawing.Point(217, 3);
+            this.btnCollapse.Name = "btnCollapse";
+            this.btnCollapse.Size = new System.Drawing.Size(34, 23);
+            this.btnCollapse.TabIndex = 4;
+            this.btnCollapse.Text = "-";
+            this.btnCollapse.UseVisualStyleBackColor = true;
+            this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
             // 
             // btnExpand
             // 
             this.btnExpand.Enabled = false;
-            this.btnExpand.Location = new System.Drawing.Point(130, 4);
+            this.btnExpand.Location = new System.Drawing.Point(177, 3);
             this.btnExpand.Name = "btnExpand";
             this.btnExpand.Size = new System.Drawing.Size(34, 23);
             this.btnExpand.TabIndex = 3;
@@ -108,16 +109,15 @@
             this.btnExpand.UseVisualStyleBackColor = true;
             this.btnExpand.Click += new System.EventHandler(this.btnExpand_Click);
             // 
-            // btnCollapse
+            // btnDumpDeviceXml
             // 
-            this.btnCollapse.Enabled = false;
-            this.btnCollapse.Location = new System.Drawing.Point(170, 4);
-            this.btnCollapse.Name = "btnCollapse";
-            this.btnCollapse.Size = new System.Drawing.Size(34, 23);
-            this.btnCollapse.TabIndex = 4;
-            this.btnCollapse.Text = "-";
-            this.btnCollapse.UseVisualStyleBackColor = true;
-            this.btnCollapse.Click += new System.EventHandler(this.btnCollapse_Click);
+            this.btnDumpDeviceXml.Location = new System.Drawing.Point(4, 4);
+            this.btnDumpDeviceXml.Name = "btnDumpDeviceXml";
+            this.btnDumpDeviceXml.Size = new System.Drawing.Size(89, 23);
+            this.btnDumpDeviceXml.TabIndex = 2;
+            this.btnDumpDeviceXml.Text = "View Devices";
+            this.btnDumpDeviceXml.UseVisualStyleBackColor = true;
+            this.btnDumpDeviceXml.Click += new System.EventHandler(this.btnDumpXml_Click);
             // 
             // DebugConsoleForm
             // 
@@ -141,7 +141,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxConsole;
         private System.Windows.Forms.TreeView treeViewXml;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnDumpXml;
+        private System.Windows.Forms.Button btnDumpDeviceXml;
         private System.Windows.Forms.Button btnCollapse;
         private System.Windows.Forms.Button btnExpand;
     }
