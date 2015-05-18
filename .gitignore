@@ -1,3 +1,8 @@
 *.suo
 netgametools-csharp/bin/
 netgametools-csharp/obj/
+tuatara-gui-win/obj/
+tuatara-gui-win/bin/Debug/netgametools-csharp.vshost.exe.config
+tuatara-gui-win/bin/Debug/tuatara_gui.vshost.exe.config
+tuatara-gui-win/bin/
+tuatara-lib/obj/
