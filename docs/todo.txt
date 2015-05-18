@@ -1,10 +1,10 @@
 * The purpose of this program to assist with network port diagnostics, and allow for configuring of port forwarding via uPnP.
-	* Main feature is uPnP configurator, with a simple UI interface for managing uPnP forwarded ports.
-		* Discover uPnP root devices and show external IP.
-		* Get a list of all forwarded ports.
-			* Filter by local IP.
-		* Remove forwarded ports.
-		* Add forwarded ports.
+	* [DONE] Main feature is uPnP configurator, with a simple UI interface for managing uPnP forwarded ports.
+		* [DONE] Discover uPnP root devices and show external IP.
+		* [DONE] Get a list of all forwarded ports.
+			* [DONE] Filter by local IP.
+		* [DONE] Remove forwarded ports.
+		* [DONE] Add forwarded ports.
 		* Add/remove should allow bundles of ports.
 	* Secondary feature is port accessibility test.
 		* Let you open any artibrary port, UDP or TCP, and either listen or send test data.
