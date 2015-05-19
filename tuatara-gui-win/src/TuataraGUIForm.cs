@@ -27,6 +27,9 @@ namespace tuatara_gui
 
             InitializeComponent();
 
+            // Set form name to be our version info
+            this.Text += string.Format(" v{0}", Application.ProductVersion);
+
         }
 
         private void On_Load(object sender, EventArgs e)

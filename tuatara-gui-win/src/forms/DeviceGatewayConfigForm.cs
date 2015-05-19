@@ -41,6 +41,8 @@ namespace tuatara_gui
             {
                 grpIGDInfo.Visible = true;
 
+                int visible = 0;
+
                 foreach (DeviceGatewayPortRecord portRec in mappings)
                 {
                     IPAddress currIP = IPAddress.Parse(portRec.InternalClient);
@@ -55,7 +57,10 @@ namespace tuatara_gui
                     item.SubItems.Add(portRec.ExternalPort.ToString());
                     item.Tag = portRec.GetHashCode();
                     listViewDeviceMappings.Items.Add(item);
+                    visible++;
                 }
+
+                labelForwards.Text = string.Format("Current Port Forwards ({0} visible of {1} total):", visible, mappings.Count);
             }
             else
                 grpIGDInfo.Visible = false;

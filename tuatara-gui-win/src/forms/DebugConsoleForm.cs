@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using chainedlupine.tuatara;
 using System.Xml;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace tuatara_gui
 {
@@ -29,18 +30,16 @@ namespace tuatara_gui
 
         public void AppendText(string text, Color color)
         {
-            if (InvokeRequired)
+            Debug.WriteLine(text);
+            this.UIThread(delegate
             {
-                this.Invoke(new Action<string, Color>(AppendText), new object[] { text, color });
-                return;
-            }
+                richTextBoxConsole.SelectionStart = richTextBoxConsole.TextLength;
+                richTextBoxConsole.SelectionLength = 0;
 
-            richTextBoxConsole.SelectionStart = richTextBoxConsole.TextLength;
-            richTextBoxConsole.SelectionLength = 0;
-
-            richTextBoxConsole.SelectionColor = color;
-            richTextBoxConsole.AppendText(text + "\r\n");
-            richTextBoxConsole.SelectionColor = richTextBoxConsole.ForeColor;
+                richTextBoxConsole.SelectionColor = color;
+                richTextBoxConsole.AppendText(text + "\r\n");
+                richTextBoxConsole.SelectionColor = richTextBoxConsole.ForeColor;
+            });
         }
 
         /*public void ClearDevices()
@@ -134,6 +133,11 @@ namespace tuatara_gui
             //assuming you want the close-button to only hide the form, 
             //and are overriding the form's OnFormClosing method:
             this.Hide();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(richTextBoxConsole.Text);
         }
 
         /*private void btnDumpXml_Click(object sender, EventArgs e)

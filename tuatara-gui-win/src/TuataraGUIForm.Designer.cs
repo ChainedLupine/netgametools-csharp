@@ -40,6 +40,7 @@
             this.grpDeviceList = new System.Windows.Forms.GroupBox();
             this.btnDebugInfo = new System.Windows.Forms.Button();
             this.btnConfig = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStripTop = new System.Windows.Forms.MenuStrip();
             this.fireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,10 +49,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.grpDeviceList.SuspendLayout();
-            this.menuStripTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewDevices
@@ -117,11 +117,11 @@
             this.grpDeviceList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpDeviceList.Controls.Add(this.pictureBox1);
             this.grpDeviceList.Controls.Add(this.btnDebugInfo);
             this.grpDeviceList.Controls.Add(this.btnConfig);
             this.grpDeviceList.Controls.Add(this.listViewDevices);
             this.grpDeviceList.Controls.Add(this.btnSearch);
+            this.grpDeviceList.Controls.Add(this.pictureBox1);
             this.grpDeviceList.Location = new System.Drawing.Point(12, 30);
             this.grpDeviceList.Name = "grpDeviceList";
             this.grpDeviceList.Size = new System.Drawing.Size(849, 183);
@@ -139,6 +139,7 @@
             this.btnDebugInfo.TabIndex = 3;
             this.btnDebugInfo.Text = "Device Debug Info";
             this.btnDebugInfo.UseVisualStyleBackColor = true;
+            this.btnDebugInfo.Visible = false;
             // 
             // btnConfig
             // 
@@ -151,6 +152,17 @@
             this.btnConfig.Text = "Config Device";
             this.btnConfig.UseVisualStyleBackColor = true;
             this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::tuatara_gui.Properties.Resources.tuatara_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(723, 106);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(126, 77);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // menuStripTop
             // 
@@ -225,22 +237,11 @@
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 12;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::tuatara_gui.Properties.Resources.tuatara_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(723, 127);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(120, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
             // TuataraGUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(873, 249);
+            this.ClientSize = new System.Drawing.Size(873, 250);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.label1);
@@ -252,9 +253,9 @@
             this.Text = "Tautara GUI";
             this.Load += new System.EventHandler(this.On_Load);
             this.grpDeviceList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStripTop.ResumeLayout(false);
             this.menuStripTop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

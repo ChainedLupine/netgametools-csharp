@@ -102,7 +102,7 @@ namespace chainedlupine.tuatara
             }
             catch
             {
-                throw new Exception("Unable to load device description XML from " + deviceUri.ToString());
+                throw new TuataraException("Unable to load device description XML from " + deviceUri.ToString());
             }
 
             debugRawXml = xDeviceProfile;
@@ -159,14 +159,14 @@ namespace chainedlupine.tuatara
         static public string GetExternalIP(Device device)
         {
             if (!isGateway(device))
-                throw new Exception("This device is not an internet gateway!");
+                throw new TuataraException("This device is not an internet gateway!");
 
             if (device.cachedExternalIP != null)
                 return device.cachedExternalIP.ToString();
 
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
-                throw new Exception("No WANIPConnection service on this device!");
+                throw new TuataraException("No WANIPConnection service on this device!");
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
@@ -180,11 +180,11 @@ namespace chainedlupine.tuatara
         static public int GetPortMappingNumberOfEntries(Device device)
         {
             if (!isGateway(device))
-                throw new Exception("This device is not an internet gateway!");
+                throw new TuataraException("This device is not an internet gateway!");
 
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
-                throw new Exception("No WANIPConnection service on this device!");
+                throw new TuataraException("No WANIPConnection service on this device!");
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
@@ -196,13 +196,13 @@ namespace chainedlupine.tuatara
         static public List<DeviceGatewayPortRecord> GetPortMappingEntries(Device device)
         {
             if (!isGateway(device))
-                throw new Exception("This device is not an internet gateway!");
+                throw new TuataraException("This device is not an internet gateway!");
 
             List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
 
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
-                throw new Exception("No WANIPConnection service on this device!");
+                throw new TuataraException("No WANIPConnection service on this device!");
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
@@ -221,11 +221,11 @@ namespace chainedlupine.tuatara
         static public void DeletePortMapping(Device device, string remoteHost, ushort externalPort, string protocol)
         {
             if (!isGateway(device))
-                throw new Exception("This device is not an internet gateway!");
+                throw new TuataraException("This device is not an internet gateway!");
 
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
-                throw new Exception("No WANIPConnection service on this device!");
+                throw new TuataraException("No WANIPConnection service on this device!");
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 
@@ -237,11 +237,11 @@ namespace chainedlupine.tuatara
         static public void AddPortMapping(Device device, string remoteHost, ushort externalPort, string protocol, ushort internalPort, string internalClient, string desc)
         {
             if (!isGateway(device))
-                throw new Exception("This device is not an internet gateway!");
+                throw new TuataraException("This device is not an internet gateway!");
 
             Service service = Service.GetServiceOfType(device.services, "urn:schemas-upnp-org:service:WANIPConnection:1");
             if (service == null)
-                throw new Exception("No WANIPConnection service on this device!");
+                throw new TuataraException("No WANIPConnection service on this device!");
 
             IServiceWANIPConnection wanService = service.serviceInterface as IServiceWANIPConnection;
 

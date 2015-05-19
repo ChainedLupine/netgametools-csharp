@@ -14,7 +14,7 @@ namespace chainedlupine.tuatara
 {
     public class Service
     {
-        public bool safetyChecks = true;
+        public bool strictProtocol = true;
 
         public string serviceType;
 
@@ -30,18 +30,20 @@ namespace chainedlupine.tuatara
 
         private static List<IService> _registeredServiceInterfaces ;
 
-        public Service(Uri deviceUri, XNamespace ns, XElement xServiceDesc, bool safetyChecks)
+        public Service(Uri deviceUri, XNamespace ns, XElement xServiceDesc, bool strictProtocol)
         {
-            this.safetyChecks = safetyChecks;
+            this.strictProtocol = strictProtocol;
 
             serviceType = xServiceDesc.Element(ns + "serviceType").Value;
             serviceControlUri = new Uri(deviceUri, xServiceDesc.Element(ns + "controlURL").Value);
             serviceDescUri = new Uri(deviceUri, xServiceDesc.Element(ns + "SCPDURL").Value);
 
-            Logger.WriteLine(string.Format("Creating service of type {0}, controlURL={1}, SCPDURL={2}", serviceType, serviceControlUri, serviceDescUri));
+            Logger.WriteLine(string.Format("Creating service of type {0}, controlURL={1}", serviceType, serviceControlUri));
 
             // Load service description
             XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
+
+            Logger.WriteLine("Loading service description XML from SCPDURL=" + serviceDescUri);
 
             XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
             debugRawXml = xDesc;
@@ -50,26 +52,10 @@ namespace chainedlupine.tuatara
             {
                 string actionName = xAction.Element(nsService + "name").Value;
                 supportedActions.Add(actionName);
+                Logger.WriteLine("Supported action: " + actionName);
             }
 
-
-            /*if (safetyChecks)
-            {
-                // Load service description
-                XNamespace nsService = "urn:schemas-upnp-org:service-1-0";
-
-                XDocument xDesc = XDocument.Load(WebRequest.Create(serviceDescUri.ToString()).GetResponse().GetResponseStream());
-
-                foreach (XElement xAction in xDesc.Descendants(nsService + "action"))
-                {
-                    string actionName = xAction.Element(nsService + "name").Value;
-                    supportedActions.Add(actionName);
-                }
-
-                Debug.WriteLine(string.Format("Found {0} actions for service {1}", supportedActions.Count, serviceType));
-            } else
-                Debug.WriteLine(string.Format("Adding unsafe service {0}.", serviceType));
-            */
+            Logger.WriteLine(string.Format("Discovered {0} actions for this service.", supportedActions.Count));
         }
 
         public static void RegisterInterfaces()
@@ -147,7 +133,7 @@ namespace chainedlupine.tuatara
                 wres = wr.GetResponse();
             } catch (WebException we)
             {
-                throw new Exception(string.Format("Unable to complete SOAP request for action {0}, error {1}!", serviceFuncName, ((HttpWebResponse)we.Response).StatusCode));
+                throw new TuataraException(string.Format("Unable to complete SOAP request for action {0}, error {1}!", serviceFuncName, ((HttpWebResponse)we.Response).StatusCode));
             }
 
             Stream streamResp = wres.GetResponseStream();
@@ -201,16 +187,18 @@ namespace chainedlupine.tuatara
 
         public string GetExternalIP()
         {
-            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
-                throw new Exception("GetExternalIPAddress not supported!");
+            if (_service.strictProtocol && _service.supportedActions.IndexOf("GetExternalIPAddress") == -1)
+                throw new TuataraException("GetExternalIPAddress not supported!");
 
             string ip = "";
 
-            XElement woo = new XElement(_uNs + "GetExternalIPAddress",
+            XElement soapReq = new XElement(_uNs + "GetExternalIPAddress",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN)
                 );
 
-            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Logger.WriteLine(string.Format("Sending SOAP request for GetExternalIPAddress"));
+
+            XDocument xResp = _service.ExecSOAPRequest(soapReq);
             //Debug.WriteLine(xResp.ToXmlDocument().AsString());
 
             ip = (from el in xResp.Descendants()
@@ -223,14 +211,16 @@ namespace chainedlupine.tuatara
 
         public int GetPortMappingNumberOfEntries()
         {
-            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
-                throw new Exception("GetPortMappingNumberOfEntries not supported!");
+            if (_service.strictProtocol && _service.supportedActions.IndexOf("GetPortMappingNumberOfEntries") == -1)
+                throw new TuataraException("GetPortMappingNumberOfEntries not supported!");
 
-            XElement woo = new XElement(_uNs + "GetPortMappingNumberOfEntries",
+            XElement soapReq = new XElement(_uNs + "GetPortMappingNumberOfEntries",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN)
                 );
 
-            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Logger.WriteLine(string.Format("Sending SOAP request for GetPortMappingNumberOfEntries"));
+
+            XDocument xResp = _service.ExecSOAPRequest(soapReq);
             //Debug.WriteLine(xResp.ToXmlDocument().AsString());
 
             string result = (from el in xResp.Descendants()
@@ -243,8 +233,8 @@ namespace chainedlupine.tuatara
 
         public List<DeviceGatewayPortRecord> GetPortMappingEntries()
         {
-            if (_service.safetyChecks && _service.supportedActions.IndexOf("GetGenericPortMappingEntry") == -1)
-                throw new Exception("GetGenericPortMappingEntry not supported!");
+            if (_service.strictProtocol && _service.supportedActions.IndexOf("GetGenericPortMappingEntry") == -1)
+                throw new TuataraException("GetGenericPortMappingEntry not supported!");
 
             List<DeviceGatewayPortRecord> mappings = new List<DeviceGatewayPortRecord>();
 
@@ -252,6 +242,7 @@ namespace chainedlupine.tuatara
 
             do
             {
+
                 XElement xAction = new XElement(_uNs + "GetGenericPortMappingEntry",
                         new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
                         new XElement("NewPortMappingIndex", portIndex.ToString())
@@ -259,7 +250,10 @@ namespace chainedlupine.tuatara
 
                 try
                 {
+                    Logger.WriteLine(string.Format("Sending SOAP request for GetGenericPortMappingEntry"));
                     XDocument xResp = _service.ExecSOAPRequest(xAction);
+
+                    Logger.WriteLine(string.Format("GetGenericPortMappingEntry returned info for index #{0}", portIndex));
 
                     DeviceGatewayPortRecord portRec = new DeviceGatewayPortRecord();
                     portRec.RemoteHost = xResp.Descendants("NewRemoteHost").Single().Value;
@@ -276,6 +270,7 @@ namespace chainedlupine.tuatara
                     portIndex++;
                 } catch
                 {
+                    Logger.WriteLine(string.Format("GetGenericPortMappingEntry exception, {0} entries found", (portIndex)));
                     portIndex = -1;
                 }
 
@@ -286,26 +281,28 @@ namespace chainedlupine.tuatara
 
         public void DeletePortMapping(string remoteHost, ushort externalPort, string protocol)
         {
-            if (_service.safetyChecks && _service.supportedActions.IndexOf("DeletePortMapping") == -1)
-                throw new Exception("DeletePortMapping not supported!");
+            if (_service.strictProtocol && _service.supportedActions.IndexOf("DeletePortMapping") == -1)
+                throw new TuataraException("DeletePortMapping not supported!");
 
-            XElement woo = new XElement(_uNs + "DeletePortMapping",
+            XElement soapReq = new XElement(_uNs + "DeletePortMapping",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
                     new XElement("NewRemoteHost", remoteHost),
                     new XElement("NewExternalPort", externalPort.ToString()),
                     new XElement("NewProtocol", protocol)
                 );
 
-            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Logger.WriteLine(string.Format("Sending SOAP request for DeletePortMapping"));
+
+            XDocument xResp = _service.ExecSOAPRequest(soapReq);
             //Debug.WriteLine(xResp.ToXmlDocument().AsString());
         }
 
         public void AddPortMapping(string remoteHost, ushort externalPort, string protocol, ushort internalPort, string internalClient, string desc)
         {
-            if (_service.safetyChecks && _service.supportedActions.IndexOf("AddPortMapping") == -1)
-                throw new Exception("AddPortMapping not supported!");
+            if (_service.strictProtocol && _service.supportedActions.IndexOf("AddPortMapping") == -1)
+                throw new TuataraException("AddPortMapping not supported!");
 
-            XElement woo = new XElement(_uNs + "AddPortMapping",
+            XElement soapReq = new XElement(_uNs + "AddPortMapping",
                     new XAttribute(XNamespace.Xmlns + "u", _serviceNamespaceURN),
                     new XElement("NewRemoteHost", remoteHost),
                     new XElement("NewExternalPort", externalPort.ToString()),
@@ -317,7 +314,9 @@ namespace chainedlupine.tuatara
                     new XElement("NewLeaseDuration", 0)
                 );
 
-            XDocument xResp = _service.ExecSOAPRequest(woo);
+            Logger.WriteLine(string.Format("Sending SOAP request for AddPortMapping"));
+
+            XDocument xResp = _service.ExecSOAPRequest(soapReq);
             //Debug.WriteLine(xResp.ToXmlDocument().AsString());
         }
 

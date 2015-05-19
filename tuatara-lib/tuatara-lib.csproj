@@ -42,6 +42,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\ControlPoint.cs" />
     <Compile Include="src\Device.cs" />
+    <Compile Include="src\Exception.cs" />
     <Compile Include="src\Logger.cs" />
     <Compile Include="src\Service.cs" />
     <Compile Include="src\SSDP.cs" />

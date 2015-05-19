@@ -33,7 +33,7 @@
             this.grpIGDInfo = new System.Windows.Forms.GroupBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.checkBoxFilter = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelForwards = new System.Windows.Forms.Label();
             this.btnPortCollections = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnRemoveForward = new System.Windows.Forms.Button();
@@ -78,7 +78,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpIGDInfo.Controls.Add(this.btnRefresh);
             this.grpIGDInfo.Controls.Add(this.checkBoxFilter);
-            this.grpIGDInfo.Controls.Add(this.label1);
+            this.grpIGDInfo.Controls.Add(this.labelForwards);
             this.grpIGDInfo.Controls.Add(this.btnPortCollections);
             this.grpIGDInfo.Controls.Add(this.label6);
             this.grpIGDInfo.Controls.Add(this.btnRemoveForward);
@@ -117,14 +117,14 @@
             this.checkBoxFilter.UseVisualStyleBackColor = true;
             this.checkBoxFilter.CheckedChanged += new System.EventHandler(this.checkBoxFilter_CheckedChanged);
             // 
-            // label1
+            // labelForwards
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Current Port Forwards:";
+            this.labelForwards.AutoSize = true;
+            this.labelForwards.Location = new System.Drawing.Point(7, 44);
+            this.labelForwards.Name = "labelForwards";
+            this.labelForwards.Size = new System.Drawing.Size(112, 13);
+            this.labelForwards.TabIndex = 13;
+            this.labelForwards.Text = "Current Port Forwards:";
             // 
             // btnPortCollections
             // 
@@ -296,7 +296,7 @@
         private System.Windows.Forms.TextBox textDeviceName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnPortCollections;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelForwards;
         private System.Windows.Forms.CheckBox checkBoxFilter;
         private System.Windows.Forms.Button btnRefresh;
     }

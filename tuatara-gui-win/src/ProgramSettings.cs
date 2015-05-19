@@ -17,6 +17,30 @@ using System.Xml.Serialization;
 
 namespace tuatara_gui
 {
+
+    static class ControlExtensions
+    {
+        static public void UIThread(this Control control, Action code)
+        {
+            if (control.InvokeRequired)
+            {
+                control.BeginInvoke(code);
+                return;
+            }
+            code.Invoke();
+        }
+
+        static public void UIThreadInvoke(this Control control, Action code)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(code);
+                return;
+            }
+            code.Invoke();
+        }
+    }
+
     class NetworkAdapterDetail
     {
         public string name ;
@@ -75,6 +99,7 @@ namespace tuatara_gui
             LoadNetworkInterfaces();
 
             debugConsoleForm = new DebugConsoleForm();
+            IntPtr dummyHandle = debugConsoleForm.Handle; // This should trigger the form to create, and therefore invokes will fire
 
             // Link loggers to debug form
             debugConsoleForm.LinkLogger();
